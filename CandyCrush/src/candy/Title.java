@@ -2,7 +2,7 @@ package candy;
 
 /**
  * 
- * @author Philippe
+ * @author Philippe et Koty
  *
  */
 
