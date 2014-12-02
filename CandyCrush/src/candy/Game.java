@@ -11,10 +11,13 @@ public class Game {
 
 	public static void main(String[] args) {
 
-		SceneManager sceneManager = new SceneManager();
-		GameManager gameManager = new GameManager();
-		EventManagerObservable eventManager = new EventManagerObservable();
-		NetworkManager networkManager = new NetworkManager();
+		SceneManager sceneManager = SceneManager.getInstance();
+		EventManagerObservable eventManager = EventManagerObservable.getInstance();
+		//GameManager gameManager = GameManager.getInstance();
+		//NetworkManager networkManager = NetworkManager.getInstance();
+		
+		
+		
 		Title title = new Title();
 		MenuBar menu = new MenuBar();
 	}
