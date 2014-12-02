@@ -1,12 +1,13 @@
+/**
+ * 
+ * @author Philippe & Marcel
+ *
+ */
+
 package candy;
 
 import java.awt.MenuBar;
 
-/**
- * 
- * @author Koty
- *
- */
 public class Game {
 
 	public static void main(String[] args) {
