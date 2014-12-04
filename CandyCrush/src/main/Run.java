@@ -6,9 +6,13 @@ public class Run implements Runnable{
 	
 	private GameManager gameManager;
 	
-	public Run() {}
-	public Run(GameManager gameManager) {
-		this.gameManager = gameManager;
+	public Run() {
+		try {
+			this.gameManager = GameManager.getInstance();
+		} catch (InstantiationException | IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public void setGameManager(){
@@ -19,9 +23,7 @@ public class Run implements Runnable{
         while(true) {
             // un pas de simulation toutes les 100ms
             try { Thread.currentThread().sleep(100); } catch(InterruptedException e) { }
-            if(!gameManager.getGameControler().getAlgorithm().fill()) {
-            	gameManager.getGameControler().getAlgorithm().removeAlignments();
-            }
+            
             // redessiner
             gameManager.getGameScene().repaint();
         }
