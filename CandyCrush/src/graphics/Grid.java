@@ -13,7 +13,7 @@ public class Grid {
 	
 	public Grid() {}
 	
-	public Grid(int length, int height) {
+	public Grid(int height, int length) {
 		this.length = length;
 		this.height = height;
 		matrix = new Marble [length][height];

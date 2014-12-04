@@ -83,6 +83,7 @@ public final class EventManagerObservable implements IObservable, MouseListener,
 
 	@Override
 	public void mousePressed(MouseEvent e) {
+		System.out.println("coucou");
 		// on appuie sur le bouton de la souris : récupérer les coordonnées de la première case
         selectedX = e.getX() / 32;
         selectedY = e.getY() / 32;

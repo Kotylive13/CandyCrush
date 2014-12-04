@@ -9,7 +9,7 @@ import scene.GameSceneObserver;
 import algorithms.Algorithms;
 import controler.GameControler;
 
-public class GameManager implements Serializable, Runnable {
+public class GameManager implements Serializable{
 
 	private Grid grid;
 	private Score score;
@@ -17,20 +17,23 @@ public class GameManager implements Serializable, Runnable {
 	private GameControler gameControler;
 	private Algorithms algorithms;
 	
+	private static GameManager INSTANCE = new GameManager();
 
 	private GameManager() {
 		grid = new Grid();
 		score = new Score();
-		gameScene = new GameSceneObserver();
+		
 		try {
 			algorithms = new Algorithms();
 		} catch (InstantiationException | IllegalAccessException e) {
 			e.printStackTrace();
 		}
+		gameControler = new GameControler(algorithms);
+		grid = gameControler.getAlgorithm().getGrid();
+		gameScene = new GameSceneObserver(algorithms, grid);
+		
 	}
 	
-	private static GameManager INSTANCE = new GameManager();
-
 	public static GameManager getInstance()
 			throws InstantiationException, IllegalAccessException {
 		return INSTANCE;
@@ -41,9 +44,75 @@ public class GameManager implements Serializable, Runnable {
 		return INSTANCE;
 	}
 
-	@Override
-	public void run() {
-		// TODO Auto-generated method stub
-		
+	/**
+	 * @return the grid
+	 */
+	public Grid getGrid() {
+		return grid;
 	}
+
+	/**
+	 * @param grid the grid to set
+	 */
+	public void setGrid(Grid grid) {
+		this.grid = grid;
+	}
+
+	/**
+	 * @return the score
+	 */
+	public Score getScore() {
+		return score;
+	}
+
+	/**
+	 * @param score the score to set
+	 */
+	public void setScore(Score score) {
+		this.score = score;
+	}
+
+	/**
+	 * @return the gameScene
+	 */
+	public GameSceneObserver getGameScene() {
+		return gameScene;
+	}
+
+	/**
+	 * @param gameScene the gameScene to set
+	 */
+	public void setGameScene(GameSceneObserver gameScene) {
+		this.gameScene = gameScene;
+	}
+
+	/**
+	 * @return the gameControler
+	 */
+	public GameControler getGameControler() {
+		return gameControler;
+	}
+
+	/**
+	 * @param gameControler the gameControler to set
+	 */
+	public void setGameControler(GameControler gameControler) {
+		this.gameControler = gameControler;
+	}
+
+	/**
+	 * @return the algorithms
+	 */
+	public Algorithms getAlgorithms() {
+		return algorithms;
+	}
+
+	/**
+	 * @param algorithms the algorithms to set
+	 */
+	public void setAlgorithms(Algorithms algorithms) {
+		this.algorithms = algorithms;
+	}
+	
+	
 }

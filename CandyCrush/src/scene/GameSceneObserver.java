@@ -18,7 +18,7 @@ public class GameSceneObserver extends Panel implements IScene {
 	private Image buffer;
 	private int selectedX = -1, selectedY = -1;
 	private int swappedX = -1, swappedY = -1;
-	private Color colors[] = { Color.WHITE, Color.RED, Color.GREEN, Color.BLUE,
+	private Color colors[] = { Color.BLACK, Color.RED, Color.GREEN, Color.BLUE,
 			Color.GRAY, Color.PINK, Color.CYAN };
 	private Grid grid;
 
@@ -63,6 +63,8 @@ public class GameSceneObserver extends Panel implements IScene {
 		Marble[][] gridMarble = (Marble[][]) grid.getMatrix();
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
+				System.out.println(i+ ": i "+j+ " j");
+				System.err.println(gridMarble[i][j].getColor());
 				g.setColor(gridMarble[i][j].getColor());
 				g.fillOval(32 * i + 3, 32 * j + 3, 27, 27);
 			}

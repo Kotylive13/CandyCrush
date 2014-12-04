@@ -24,6 +24,7 @@ public class Algorithms {
 	private int length = 8;
 	private int height = 8;
 	private List<Candy> candyList;
+	private boolean takeGrid = false;
 	// pour marquer les cases non alignées
 	boolean marked[][] = new boolean[8][8];
 
@@ -32,7 +33,7 @@ public class Algorithms {
 		matrix = new Candy[length][height];
 		candyList = new ArrayList<Candy>();
 		CandyFactory candyFactory = new CandyFactory();
-		candyFactory.createCandy(Marble.class);
+		candyList = candyFactory.createCandy(Marble.class);
 	}
 
 	// remplir les cases vides par gravit�, et g�n�rer des cases al�atoirement
@@ -40,12 +41,13 @@ public class Algorithms {
 	public boolean fill() {
 		Random rand = new Random();
 		boolean modified = false;
-		Candy[][] matrix = grid.getMatrix();
-		Candy candy = new Candy();
+		matrix = grid.getMatrix();
+		
 		for (int i = 0; i < grid.getHeight(); i++) {
-			for (int j = grid.getHeight() - 1; j >= 0; j--) {
+			for (int j = grid.getLength() - 1; j >= 0; j--) {
 				if (matrix[i][j] == null) {
 					if (j == 0) {
+						Candy candy = new Candy();
 						candy = getRandomCandy();
 						candy.setPosX(i);
 						candy.setPosY(j);
@@ -58,6 +60,11 @@ public class Algorithms {
 				}
 			}
 		}
+		grid.setMatrix(matrix);
+		for (int i = 0; i < grid.getHeight(); i++)
+			for (int j = 0; j < grid.getLength(); j++)
+				System.out.println(((Marble)(matrix[i][j])));
+			
 		return modified;
 	}
 
@@ -150,5 +157,18 @@ public class Algorithms {
 			}
 		}
 		return modified;
+	}
+	
+	public synchronized Grid getGrid() {
+		if (takeGrid == false) {
+			takeGrid = true;
+			return grid;
+		} else {
+			return null;
+		}
+	}
+	
+	public void releaseGrid() {
+		takeGrid = false;
 	}
 }

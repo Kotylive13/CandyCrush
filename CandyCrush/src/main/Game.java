@@ -6,26 +6,48 @@
 
 package main;
 
-import graphics.window.Title;
-
-import java.awt.MenuBar;
+import java.awt.Frame;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import manager.EventManagerObservable;
-import manager.SceneManager;
+import manager.GameManager;
 
-public class Game {
+public class Game implements Runnable {
+	private static GameManager gameManager;
+	public void run() {
+        while(true) {
+            // un pas de simulation toutes les 100ms
+            try { Thread.currentThread().sleep(100); } catch(InterruptedException e) { }
+            // redessiner
+            gameManager.getGameScene().repaint();
+        }
+    }
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InstantiationException, IllegalAccessException{
 
-		SceneManager sceneManager = SceneManager.getInstance();
-		EventManagerObservable eventManager = EventManagerObservable.getInstance();
+		/*SceneManager sceneManager = SceneManager.getInstance();
+		
 		//GameManager gameManager = GameManager.getInstance();
 		//NetworkManager networkManager = NetworkManager.getInstance();
 		
 		
 		
 		Title title = new Title();
-		MenuBar menu = new MenuBar();
+		MenuBar menu = new MenuBar();*/
+		
+		Frame frame = new Frame("Miam, des bonbons !");
+		gameManager = GameManager.getInstance();
+		EventManagerObservable eventManager = EventManagerObservable.getInstance();
+        frame.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent event) {
+                System.exit(0);
+            }
+        });
+        frame.add(gameManager.getGameScene());
+        frame.pack();
+        frame.setVisible(true);
 	}
+
 
 }
