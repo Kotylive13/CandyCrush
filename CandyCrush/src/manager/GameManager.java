@@ -22,7 +22,6 @@ public class GameManager implements Serializable{
 	private GameManager() {
 		grid = new Grid();
 		score = new Score();
-		
 		try {
 			gameControler = new GameControler();
 			gameScene = new GameSceneObserver(gameControler.getAlgorithm(), gameControler.getAlgorithm().getGrid());

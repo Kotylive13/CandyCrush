@@ -6,6 +6,9 @@
 
 package main;
 
+import graphics.window.Title;
+import graphics.window.Window;
+
 import java.awt.Frame;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -22,24 +25,14 @@ public class Game {
 		
 		//GameManager gameManager = GameManager.getInstance();
 		//NetworkManager networkManager = NetworkManager.getInstance();
-		
-		
-		
 		Title title = new Title();
 		MenuBar menu = new MenuBar();*/
-        	
-		Frame frame = new Frame("Miam, des bonbons !");
+        Title title = new Title("Miam, des bonbons !");
+        Window window = new Window(title);
 		gameManager = GameManager.getInstance();
 		EventManagerObservable eventManager = EventManagerObservable.getInstance();
+		window.addFrame();
         new Thread(new Run()).start();	
-        frame.addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent event) {
-                System.exit(0);
-            }
-        });
-        frame.add(gameManager.getGameScene());
-        frame.pack();
-        frame.setVisible(true);
 	}
 	
 }

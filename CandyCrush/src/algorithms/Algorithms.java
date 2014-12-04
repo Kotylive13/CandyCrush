@@ -21,6 +21,7 @@ public class Algorithms {
 	private int length = 8;
 	private int height = 8;
 	private List<Candy> candyList;
+	private boolean modified = false;
 	// pour marquer les cases non alignées
 	boolean marked[][] = new boolean[8][8];
 
@@ -30,16 +31,24 @@ public class Algorithms {
 		candyList = new ArrayList<Candy>();
 		CandyFactory candyFactory = new CandyFactory();
 		candyList = candyFactory.createCandy(Marble.class);
+		initMarked();
+	}
+
+	private void initMarked() {
+		for (int i = 0; i < height; i++)
+			for (int j = 0; j < length; j++)
+				marked[i][j] = false;
 	}
 
 	// remplir les cases vides par gravit�, et g�n�rer des cases al�atoirement
 	// par le haut
 	public boolean fill() {
-		boolean modified = false;
 		matrix = grid.getMatrix();
+		System.out.println("coucouuuuuuuuuj,efkz,pfk,zlf;zl;flz;,lkef,zlef,lz,flz;lfe;e;flz;elf");
 		Candy candy;
 		for (int i = 0; i < grid.getHeight(); i++) {
 			for (int j = grid.getLength() - 1; j >= 0; j--) {
+				modified = true;
 				candy = getRandomCandy();
 				candy.setPosX(i);
 				candy.setPosY(j);
@@ -116,29 +125,35 @@ public class Algorithms {
 	// supprimer les alignements
 	public boolean removeAlignments() {
 		matrix = grid.getMatrix();
+		boolean modified = false;
 		// passe 1 : marquer tous les alignements
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
 				if (matrix[i][j] != null && horizontalAligned(i, j)) {
+					modified = true;
 					marked[i][j] = marked[i + 1][j] = marked[i + 2][j] = true;
 				}
 				if (matrix[i][j] != null && verticalAligned(i, j)) {
+					modified = true;
 					marked[i][j] = marked[i][j + 1] = marked[i][j + 2] = true;
 				}
 			}
 		}
+		if (modified == false)
+			return modified;
 		// passe 2 : supprimer les cases marqu�es
-		boolean modified = false;
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
 				if (marked[i][j]) {
+					System.out.println("i: " + i + " j : " + j);
 					matrix[i][j] = null;
 					marked[i][j] = false;
 					modified = true;
 				}
 			}
 		}
-		grid.setMatrix(matrix);
+		if (!grid.getMatrix().equals(matrix))
+			grid.setMatrix(matrix);
 		return modified;
 	}
 

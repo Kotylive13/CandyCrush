@@ -1,8 +1,5 @@
-<<<<<<< HEAD:CandyCrush/src/candy/Title.java
-package candy;
-=======
+
 package graphics.window;
->>>>>>> origin/master:CandyCrush/src/graphics/window/Title.java
 
 /**
  * 
@@ -11,5 +8,18 @@ package graphics.window;
  */
 
 public class Title {
+	private String title;
+	
+	public Title() {}
+	public Title(String title) {
+		this.title = title;
+	}
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
 
+	
 }

@@ -15,13 +15,16 @@ import algorithms.Algorithms;
 
 public class GameSceneObserver extends Panel implements IScene {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private Algorithms algo;
 
 	private Image buffer;
 	private int selectedX = -1, selectedY = -1;
 	private int swappedX = -1, swappedY = -1;
-	private Color colors[] = { Color.BLACK, Color.RED, Color.GREEN, Color.BLUE,
-			Color.GRAY, Color.PINK, Color.CYAN };
 	private Grid grid;
 
 	public GameSceneObserver() {
@@ -31,7 +34,7 @@ public class GameSceneObserver extends Panel implements IScene {
 		this.algo = algo;
 		this.grid = grid;
 		addMouseListener(EventManagerObservable.getInstance());
-        addMouseMotionListener(EventManagerObservable.getInstance());
+		addMouseMotionListener(EventManagerObservable.getInstance());
 	}
 
 	@Override
@@ -67,8 +70,8 @@ public class GameSceneObserver extends Panel implements IScene {
 		Marble[][] gridMarble = (Marble[][]) grid.getMatrix();
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
-				//System.out.println(i+ ": i "+j+ " j");
-				//System.err.println(gridMarble[i][j].getColor());
+				// System.out.println(i+ ": i "+j+ " j");
+				// System.err.println(gridMarble[i][j].getColor());
 				g2.setColor(gridMarble[i][j].getColor());
 				g2.fillOval(32 * i + 3, 32 * j + 3, 27, 27);
 			}
@@ -80,6 +83,7 @@ public class GameSceneObserver extends Panel implements IScene {
 
 	@Override
 	public void update(Graphics g) {
+		//System.out.println("coucou");
 		paint(g);
 	}
 
@@ -99,7 +103,7 @@ public class GameSceneObserver extends Panel implements IScene {
 	}
 
 	// taille de la fen�tre
-    public Dimension getPreferredSize() {
-        return new Dimension(32 * 8 + 1, 32 * 8 + 1);
-    }
+	public Dimension getPreferredSize() {
+		return new Dimension(32 * 8 + 1, 32 * 8 + 1);
+	}
 }
