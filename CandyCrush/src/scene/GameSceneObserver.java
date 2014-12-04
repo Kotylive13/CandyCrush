@@ -4,11 +4,15 @@ import graphics.Grid;
 import graphics.Marble;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Panel;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 
+import manager.EventManagerObservable;
 import algorithms.Algorithms;
 
 public class GameSceneObserver extends Panel implements IScene {
@@ -28,6 +32,8 @@ public class GameSceneObserver extends Panel implements IScene {
 	public GameSceneObserver(Algorithms algo, Grid grid) {
 		this.algo = algo;
 		this.grid = grid;
+		addMouseListener(EventManagerObservable.getInstance());
+        addMouseMotionListener(EventManagerObservable.getInstance());
 	}
 
 	@Override
@@ -43,8 +49,8 @@ public class GameSceneObserver extends Panel implements IScene {
 		// afficher la grille vide
 		g2.setColor(Color.BLACK);
 		for (int i = 0; i < 9; i++) {
-			g.drawLine(32 * i, 0, 32 * i, 8 * 32 + 1);
-			g.drawLine(0, 32 * i, 8 * 32 + 1, 32 * i);
+			g2.drawLine(32 * i, 0, 32 * i, 8 * 32 + 1);
+			g2.drawLine(0, 32 * i, 8 * 32 + 1, 32 * i);
 		}
 
 		// afficher la premi�re case s�lectionn�e
@@ -63,10 +69,10 @@ public class GameSceneObserver extends Panel implements IScene {
 		Marble[][] gridMarble = (Marble[][]) grid.getMatrix();
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
-				System.out.println(i+ ": i "+j+ " j");
-				System.err.println(gridMarble[i][j].getColor());
-				g.setColor(gridMarble[i][j].getColor());
-				g.fillOval(32 * i + 3, 32 * j + 3, 27, 27);
+				//System.out.println(i+ ": i "+j+ " j");
+				//System.err.println(gridMarble[i][j].getColor());
+				g2.setColor(gridMarble[i][j].getColor());
+				g2.fillOval(32 * i + 3, 32 * j + 3, 27, 27);
 			}
 		}
 
@@ -94,4 +100,8 @@ public class GameSceneObserver extends Panel implements IScene {
 		this.algo = algo;
 	}
 
+	// taille de la fen�tre
+    public Dimension getPreferredSize() {
+        return new Dimension(32 * 8 + 1, 32 * 8 + 1);
+    }
 }

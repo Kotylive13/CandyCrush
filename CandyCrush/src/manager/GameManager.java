@@ -24,13 +24,12 @@ public class GameManager implements Serializable{
 		score = new Score();
 		
 		try {
-			algorithms = new Algorithms();
+			gameControler = new GameControler();
 		} catch (InstantiationException | IllegalAccessException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		gameControler = new GameControler(algorithms);
-		grid = gameControler.getAlgorithm().getGrid();
-		gameScene = new GameSceneObserver(algorithms, grid);
+		gameScene = new GameSceneObserver(gameControler.getAlgorithm(), gameControler.getAlgorithm().getGrid());
 		
 	}
 	

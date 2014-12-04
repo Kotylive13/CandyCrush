@@ -39,25 +39,28 @@ public class Algorithms {
 	// remplir les cases vides par gravit�, et g�n�rer des cases al�atoirement
 	// par le haut
 	public boolean fill() {
-		Random rand = new Random();
 		boolean modified = false;
 		matrix = grid.getMatrix();
-		
+		Candy candy;
 		for (int i = 0; i < grid.getHeight(); i++) {
 			for (int j = grid.getLength() - 1; j >= 0; j--) {
-				if (matrix[i][j] == null) {
-					if (j == 0) {
+				/*if (matrix[j][i] == null) {
+					if (i == 0) {
 						Candy candy = new Candy();
 						candy = getRandomCandy();
-						candy.setPosX(i);
-						candy.setPosY(j);
-						matrix[i][j] = candy;
+						candy.setPosX(j);
+						candy.setPosY(i);
+						matrix[j][i] = candy;
 					} else {
-						matrix[i][j] = matrix[i][j - 1];
-						matrix[i][j - 1] = null;
+						matrix[j][i] = matrix[j][i - 1];
+						matrix[j][i - 1] = null;
 					}
 					modified = true;
-				}
+				}*/
+				candy = getRandomCandy();
+				candy.setPosX(i);
+				candy.setPosY(j);
+				matrix[i][j] = candy;
 			}
 		}
 		grid.setMatrix(matrix);
@@ -132,7 +135,7 @@ public class Algorithms {
 	}
 
 	// supprimer les alignements
-	boolean removeAlignments() {
+	public boolean removeAlignments() {
 		matrix = grid.getMatrix();
 		// passe 1 : marquer tous les alignements
 		for (int i = 0; i < 8; i++) {
