@@ -1,32 +1,41 @@
-package candy;
+package oldgame;
 
-import java.awt.*;
-import java.awt.geom.*;
-import java.util.*;
-import java.awt.event.*;
-import java.io.*;
+
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Frame;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.Panel;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.util.Random;
 
 class CandyCrush extends Panel implements Runnable, MouseListener, MouseMotionListener {
     /**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	// grille avec un numéro de couleur par case
+	// grille avec un numï¿½ro de couleur par case
     int grid[][] = new int[8][8];
-    // pour marquer les cases non alignées
+    // pour marquer les cases non alignï¿½es
     boolean marked[][] = new boolean[8][8];
     // couleur des cases : 0 = vide 
     Color colors[] = {Color.WHITE, Color.RED, Color.GREEN, Color.BLUE, Color.GRAY, Color.PINK, Color.CYAN};
-    // coordonnées des cases sélectionnées : -1 = non sélectionné
+    // coordonnï¿½es des cases sï¿½lectionnï¿½es : -1 = non sï¿½lectionnï¿½
     int selectedX = -1, selectedY = -1; 
     int swappedX = -1, swappedY = -1;
 
-    // image pour le rendu hors écran
+    // image pour le rendu hors ï¿½cran
     Image buffer;
 
-    // initialisation : événements souris et boucle principale
+    // initialisation : ï¿½vï¿½nements souris et boucle principale
     CandyCrush() {
-        // remplir une première fois la grille
+        // remplir une premiï¿½re fois la grille
         while(fill());
         // enlever les alignements existants
         while(removeAlignments()) {
@@ -37,19 +46,19 @@ class CandyCrush extends Panel implements Runnable, MouseListener, MouseMotionLi
         new Thread(this).start();
     }
 
-    // gestion des événements souris
+    // gestion des ï¿½vï¿½nements souris
     public void mousePressed(MouseEvent e) { 
-        // on appuie sur le bouton de la souris : récupérer les coordonnées de la première case
+        // on appuie sur le bouton de la souris : rï¿½cupï¿½rer les coordonnï¿½es de la premiï¿½re case
         selectedX = e.getX() / 32;
         selectedY = e.getY() / 32;
         repaint();
     }
     public void mouseMoved(MouseEvent e) { 
-        // on bouge la souris : récupérer les coordonnées de la deuxième case
+        // on bouge la souris : rï¿½cupï¿½rer les coordonnï¿½es de la deuxiï¿½me case
         if(selectedX != -1 && selectedY != -1) {
             swappedX = e.getX() / 32;
             swappedY = e.getY() / 32;
-            // si l'échange n'est pas valide, on cache la deuxième case
+            // si l'ï¿½change n'est pas valide, on cache la deuxiï¿½me case
             if(!isValidSwap(selectedX, selectedY, swappedX, swappedY)) {
                 swappedX = swappedY = -1;
             }
@@ -57,7 +66,7 @@ class CandyCrush extends Panel implements Runnable, MouseListener, MouseMotionLi
         repaint();
     }
     public void mouseReleased(MouseEvent e) {
-        // lorsque l'on relâche la souris il faut faire l'échange et cacher les cases
+        // lorsque l'on relï¿½che la souris il faut faire l'ï¿½change et cacher les cases
         if(selectedX != -1 && selectedY != -1 && swappedX != -1 && swappedY != -1) {
             swap(selectedX, selectedY, swappedX, swappedY);
         }
@@ -65,46 +74,46 @@ class CandyCrush extends Panel implements Runnable, MouseListener, MouseMotionLi
         repaint();
     }
 
-    // non implémentés
+    // non implï¿½mentï¿½s
     public void mouseClicked(MouseEvent e) { }
     public void mouseEntered(MouseEvent e) { }
     public void mouseExited(MouseEvent e) { }
     public void mouseDragged(MouseEvent e) { mouseMoved(e); }
 
-    // est-ce qu'on a trois cases de la même couleur vers le droite depuis (i, j) ?
+    // est-ce qu'on a trois cases de la mï¿½me couleur vers le droite depuis (i, j) ?
     boolean horizontalAligned(int i, int j) {
         if(i < 0 || j < 0 || i >= 6 || j >= 8) return false;
         if(grid[i][j] == grid[i + 1][j] && grid[i][j] == grid[i + 2][j]) return true;
         return false;
     }
 
-    // est-ce qu'on a trois cases de la même couleur vers le bas depuis (i, j) ?
+    // est-ce qu'on a trois cases de la mï¿½me couleur vers le bas depuis (i, j) ?
     boolean verticalAligned(int i, int j) {
         if(i < 0 || j < 0 || i >= 8 || j >= 6) return false;
         if(grid[i][j] == grid[i][j + 1] && grid[i][j] == grid[i][j + 2]) return true;
         return false;
     }
 
-    // échanger le contenu de deux cases
+    // ï¿½changer le contenu de deux cases
     void swap(int x1, int y1, int x2, int y2) {
         int tmp = grid[x1][y1];
         grid[x1][y1] = grid[x2][y2];
         grid[x2][y2] = tmp;
     }
 
-    // détermine si l'échange entre deux cases est valide
+    // dï¿½termine si l'ï¿½change entre deux cases est valide
     boolean isValidSwap(int x1, int y1, int x2, int y2) {
         // il faut que les cases soient dans la grille
         if(x1 == -1 || x2 == -1 || y1 == -1 || y2 == -1) return false;
-        // que les cases soient à côté l'une de l'autre
+        // que les cases soient ï¿½ cï¿½tï¿½ l'une de l'autre
         if(Math.abs(x2 - x1) + Math.abs(y2 - y1) != 1) return false;
-        // et que les couleurs soient différentes
+        // et que les couleurs soient diffï¿½rentes
         if(grid[x1][y1] == grid[x2][y2]) return false;
 
-        // alors on effectue l'échange
+        // alors on effectue l'ï¿½change
         swap(x1, y1, x2, y2);
 
-        // et on vérifie que ça créé un nouvel alignement
+        // et on vï¿½rifie que ï¿½a crï¿½ï¿½ un nouvel alignement
         boolean newAlignment = false;
         for(int i = 0; i < 3; i++) {
             newAlignment |= horizontalAligned(x1 - i, y1);
@@ -113,7 +122,7 @@ class CandyCrush extends Panel implements Runnable, MouseListener, MouseMotionLi
             newAlignment |= verticalAligned(x2, y2 - i);
         }
 
-        // puis on annule l'échange
+        // puis on annule l'ï¿½change
         swap(x1, y1, x2, y2);
         return newAlignment;
     }
@@ -131,7 +140,7 @@ class CandyCrush extends Panel implements Runnable, MouseListener, MouseMotionLi
                 }
             }
         }
-        // passe 2 : supprimer les cases marquées
+        // passe 2 : supprimer les cases marquï¿½es
         boolean modified = false;
         for(int i = 0; i < 8; i++) {
             for(int j = 0; j < 8; j++) {
@@ -145,7 +154,7 @@ class CandyCrush extends Panel implements Runnable, MouseListener, MouseMotionLi
         return modified;
     }
 
-    // remplir les cases vides par gravité, et générer des cases aléatoirement par le haut
+    // remplir les cases vides par gravitï¿½, et gï¿½nï¿½rer des cases alï¿½atoirement par le haut
     boolean fill() {
         Random rand = new Random();
         boolean modified = false;
@@ -164,7 +173,7 @@ class CandyCrush extends Panel implements Runnable, MouseListener, MouseMotionLi
         return modified;
     }
 
-    // évite le syntillements
+    // ï¿½vite le syntillements
     public void update(Graphics g) {
         paint(g);
     }
@@ -185,13 +194,13 @@ class CandyCrush extends Panel implements Runnable, MouseListener, MouseMotionLi
             g.drawLine(0, 32 * i, 8 * 32 + 1, 32 * i); 
         }
 
-        // afficher la première case sélectionnée
+        // afficher la premiï¿½re case sï¿½lectionnï¿½e
         if(selectedX != -1 && selectedY != -1) {
             g.setColor(Color.ORANGE);
             g.fillRect(selectedX * 32 + 1, selectedY * 32 + 1, 31, 31);
         }
 
-        // afficher la deuxième case sélectionnée
+        // afficher la deuxiï¿½me case sï¿½lectionnï¿½e
         if(swappedX != -1 && swappedY != -1) {
             g.setColor(Color.YELLOW);
             g.fillRect(swappedX * 32 + 1, swappedY * 32 + 1, 31, 31);
@@ -205,7 +214,7 @@ class CandyCrush extends Panel implements Runnable, MouseListener, MouseMotionLi
             }
         }
 
-        // copier l'image à l'écran
+        // copier l'image ï¿½ l'ï¿½cran
         g2.drawImage(buffer, 0, 0, null);
     }
 
@@ -225,13 +234,13 @@ class CandyCrush extends Panel implements Runnable, MouseListener, MouseMotionLi
         }
     }
 
-    // taille de la fenêtre
+    // taille de la fenï¿½tre
     public Dimension getPreferredSize() {
         return new Dimension(32 * 8 + 1, 32 * 8 + 1);
     }
 
-    // met le jeu dans une fenêtre
-    public static void main(String args[]) {
+    // met le jeu dans une fenï¿½tre
+    public static void main2(String args[]) {
         Frame frame = new Frame("Miam, des bonbons !");
         final CandyCrush obj = new CandyCrush();
         frame.addWindowListener(new WindowAdapter() {
