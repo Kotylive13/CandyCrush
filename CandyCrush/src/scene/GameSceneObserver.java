@@ -9,8 +9,6 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Panel;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 
 import manager.EventManagerObservable;
 import algorithms.Algorithms;
