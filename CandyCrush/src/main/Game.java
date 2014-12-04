@@ -6,6 +6,7 @@
 
 package main;
 
+import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -13,16 +14,8 @@ import java.awt.event.WindowEvent;
 import manager.EventManagerObservable;
 import manager.GameManager;
 
-public class Game implements Runnable {
+public class Game {
 	private static GameManager gameManager;
-	public void run() {
-        while(true) {
-            // un pas de simulation toutes les 100ms
-            try { Thread.currentThread().sleep(100); } catch(InterruptedException e) { }
-            // redessiner
-            gameManager.getGameScene().repaint();
-        }
-    }
 
 	public static void main(String[] args) throws InstantiationException, IllegalAccessException{
 
@@ -35,10 +28,11 @@ public class Game implements Runnable {
 		
 		Title title = new Title();
 		MenuBar menu = new MenuBar();*/
-		
+        	
 		Frame frame = new Frame("Miam, des bonbons !");
 		gameManager = GameManager.getInstance();
 		EventManagerObservable eventManager = EventManagerObservable.getInstance();
+        new Thread(new Run()).start();	
         frame.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent event) {
                 System.exit(0);
@@ -48,6 +42,5 @@ public class Game implements Runnable {
         frame.pack();
         frame.setVisible(true);
 	}
-
-
+	
 }

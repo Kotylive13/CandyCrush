@@ -6,10 +6,8 @@ public class GameControler {
 	
 	private Algorithms algorithm;
 
-	public GameControler() {}
-	
-	public GameControler(Algorithms algo) {
-		this.algorithm = algo;
+	public GameControler() throws InstantiationException, IllegalAccessException {
+		algorithm = new Algorithms();
 		algorithm.fill();
 	}
 	
