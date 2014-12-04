@@ -17,12 +17,10 @@ import java.util.Random;
 public class Algorithms {
 
 	private Grid grid;
-	private final int colorsLength = 7;
 	private Candy[][] matrix;
 	private int length = 8;
 	private int height = 8;
 	private List<Candy> candyList;
-	private boolean takeGrid = false;
 	// pour marquer les cases non alignées
 	boolean marked[][] = new boolean[8][8];
 
@@ -48,7 +46,7 @@ public class Algorithms {
 				matrix[i][j] = candy;
 			}
 		}
-		grid.setMatrix(matrix);			
+		grid.setMatrix(matrix);
 		return modified;
 	}
 
@@ -143,17 +141,8 @@ public class Algorithms {
 		grid.setMatrix(matrix);
 		return modified;
 	}
-	
+
 	public synchronized Grid getGrid() {
-		if (takeGrid == false) {
-			takeGrid = true;
-			return grid;
-		} else {
-			return null;
-		}
-	}
-	
-	public void releaseGrid() {
-		takeGrid = false;
+		return grid;
 	}
 }
