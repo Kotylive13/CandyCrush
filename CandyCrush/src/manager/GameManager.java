@@ -16,7 +16,7 @@ public class GameManager implements Serializable{
 	private GameSceneObserver gameScene;
 	private GameControler gameControler;
 	private Algorithms algorithms;
-	
+	private static final long serialVersionUID = 1;
 	private static GameManager INSTANCE = new GameManager();
 
 	private GameManager() {
@@ -25,12 +25,11 @@ public class GameManager implements Serializable{
 		
 		try {
 			gameControler = new GameControler();
+			gameScene = new GameSceneObserver(gameControler.getAlgorithm(), gameControler.getAlgorithm().getGrid());
 		} catch (InstantiationException | IllegalAccessException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		gameScene = new GameSceneObserver(gameControler.getAlgorithm(), gameControler.getAlgorithm().getGrid());
-		
 	}
 	
 	public static GameManager getInstance()

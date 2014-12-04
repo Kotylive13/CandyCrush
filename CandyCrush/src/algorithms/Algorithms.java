@@ -5,14 +5,12 @@ import graphics.Candy;
 import graphics.Grid;
 import graphics.Marble;
 
-import java.awt.Color;
 import java.util.ArrayList;
 /**
  * 
  * @author Philippe & Marcel
  *
  */
-
 import java.util.List;
 import java.util.Random;
 
@@ -30,7 +28,7 @@ public class Algorithms {
 
 	public Algorithms() throws InstantiationException, IllegalAccessException {
 		grid = new Grid(length, height);
-		matrix = new Candy[length][height];
+		matrix = grid.getMatrix();
 		candyList = new ArrayList<Candy>();
 		CandyFactory candyFactory = new CandyFactory();
 		candyList = candyFactory.createCandy(Marble.class);
@@ -44,30 +42,13 @@ public class Algorithms {
 		Candy candy;
 		for (int i = 0; i < grid.getHeight(); i++) {
 			for (int j = grid.getLength() - 1; j >= 0; j--) {
-				/*if (matrix[j][i] == null) {
-					if (i == 0) {
-						Candy candy = new Candy();
-						candy = getRandomCandy();
-						candy.setPosX(j);
-						candy.setPosY(i);
-						matrix[j][i] = candy;
-					} else {
-						matrix[j][i] = matrix[j][i - 1];
-						matrix[j][i - 1] = null;
-					}
-					modified = true;
-				}*/
 				candy = getRandomCandy();
 				candy.setPosX(i);
 				candy.setPosY(j);
 				matrix[i][j] = candy;
 			}
 		}
-		grid.setMatrix(matrix);
-		for (int i = 0; i < grid.getHeight(); i++)
-			for (int j = 0; j < grid.getLength(); j++)
-				System.out.println(((Marble)(matrix[i][j])));
-			
+		grid.setMatrix(matrix);			
 		return modified;
 	}
 
@@ -159,6 +140,7 @@ public class Algorithms {
 				}
 			}
 		}
+		grid.setMatrix(matrix);
 		return modified;
 	}
 	

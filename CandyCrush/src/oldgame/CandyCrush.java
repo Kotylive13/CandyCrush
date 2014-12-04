@@ -1,11 +1,19 @@
 package oldgame;
 
 
-import java.awt.*;
-import java.awt.geom.*;
-import java.util.*;
-import java.awt.event.*;
-import java.io.*;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Frame;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.Panel;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.util.Random;
 
 class CandyCrush extends Panel implements Runnable, MouseListener, MouseMotionListener {
     /**

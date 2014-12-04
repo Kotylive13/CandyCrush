@@ -23,7 +23,11 @@ public class Run implements Runnable{
         while(true) {
             // un pas de simulation toutes les 100ms
             try { Thread.currentThread().sleep(100); } catch(InterruptedException e) { }
-            
+         // s'il n'y a pas de case vide, chercher des alignements
+            if(gameManager.getAlgorithms()!= null && !gameManager.getAlgorithms().fill()) {
+            	System.out.println("coucou");
+            	System.out.println(gameManager.getAlgorithms().removeAlignments());
+            }
             // redessiner
             gameManager.getGameScene().repaint();
         }
