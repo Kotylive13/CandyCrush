@@ -25,6 +25,7 @@ public class GameManager implements Serializable{
 		try {
 			gameControler = new GameControler();
 			gameScene = new GameSceneObserver(gameControler.getAlgorithm(), gameControler.getAlgorithm().getGrid());
+			System.out.println(gameScene);
 		} catch (InstantiationException | IllegalAccessException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

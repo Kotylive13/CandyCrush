@@ -44,7 +44,6 @@ public class Algorithms {
 	// par le haut
 	public boolean fill() {
 		matrix = grid.getMatrix();
-		System.out.println("coucouuuuuuuuuj,efkz,pfk,zlf;zl;flz;,lkef,zlef,lz,flz;lfe;e;flz;elf");
 		Candy candy;
 		for (int i = 0; i < grid.getHeight(); i++) {
 			for (int j = grid.getLength() - 1; j >= 0; j--) {

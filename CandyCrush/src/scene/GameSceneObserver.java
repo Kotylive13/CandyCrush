@@ -2,6 +2,8 @@ package scene;
 
 import graphics.Grid;
 import graphics.Marble;
+import iObserver.IObservable;
+import iObserver.IObserver;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -13,26 +15,26 @@ import java.awt.Panel;
 import manager.EventManagerObservable;
 import algorithms.Algorithms;
 
-public class GameSceneObserver extends Panel implements IScene {
+public class GameSceneObserver extends Panel implements IObserver, IScene {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	private Algorithms algo;
-
 	private Image buffer;
-	private int selectedX = -1, selectedY = -1;
-	private int swappedX = -1, swappedY = -1;
+	private int selectedX;
+	private int selectedY;
+	private int swappedX;
+	private int swappedY;
 	private Grid grid;
 
 	public GameSceneObserver() {
+		selectedX = selectedY = swappedX = swappedY = -1;
 	}
 
 	public GameSceneObserver(Algorithms algo, Grid grid) {
 		this.algo = algo;
 		this.grid = grid;
+		selectedX = selectedY = swappedX = swappedY = -1;
 		addMouseListener(EventManagerObservable.getInstance());
 		addMouseMotionListener(EventManagerObservable.getInstance());
 	}
@@ -54,13 +56,13 @@ public class GameSceneObserver extends Panel implements IScene {
 			g2.drawLine(0, 32 * i, 8 * 32 + 1, 32 * i);
 		}
 
-		// afficher la premi�re case s�lectionn�e
+		// afficher la première case sélectionnée
 		if (selectedX != -1 && selectedY != -1) {
 			g2.setColor(Color.ORANGE);
 			g2.fillRect(selectedX * 32 + 1, selectedY * 32 + 1, 31, 31);
 		}
 
-		// afficher la deuxi�me case s�lectionn�e
+		// afficher la deuxième case sélectionnée
 		if (swappedX != -1 && swappedY != -1) {
 			g2.setColor(Color.YELLOW);
 			g2.fillRect(swappedX * 32 + 1, swappedY * 32 + 1, 31, 31);
@@ -77,13 +79,12 @@ public class GameSceneObserver extends Panel implements IScene {
 			}
 		}
 
-		// copier l'image � l'�cran
+		// copier l'image à l'écran
 		g.drawImage(buffer, 0, 0, null);
 	}
 
 	@Override
 	public void update(Graphics g) {
-		//System.out.println("coucou");
 		paint(g);
 	}
 
@@ -105,5 +106,14 @@ public class GameSceneObserver extends Panel implements IScene {
 	// taille de la fen�tre
 	public Dimension getPreferredSize() {
 		return new Dimension(32 * 8 + 1, 32 * 8 + 1);
+	}
+
+	@Override
+	public void update(IObservable o) {
+		
+		EventManagerObservable eventManager = EventManagerObservable.getInstance();
+		this.selectedX = eventManager.getSelectedX();
+		this.selectedY = eventManager.getSelectedY();
+		System.out.println("Observer -> Case : [" + eventManager.getSelectedX() + " , "+ eventManager.getSelectedY() + "]");
 	}
 }
