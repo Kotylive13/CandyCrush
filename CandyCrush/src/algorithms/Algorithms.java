@@ -48,11 +48,16 @@ public class Algorithms {
 		for (int i = 0; i < grid.getHeight(); i++) {
 			for (int j = grid.getLength() - 1; j >= 0; j--) {
 				if (matrix[i][j] == null) {
-					Candy candy = new Candy();
-					candy = getRandomCandy();
-					candy.setPosX(i);
-					candy.setPosY(j);
-					matrix[i][j] = candy;
+					if (j == 0) {
+						Candy candy = new Candy();
+						candy = getRandomCandy();
+						candy.setPosX(i);
+						candy.setPosY(j);
+						matrix[i][j] = candy;
+					} else {
+						matrix[i][j] = matrix[i][j - 1];
+						matrix[i][j-1] = null;
+					}
 					modified = true;
 				}
 			}
