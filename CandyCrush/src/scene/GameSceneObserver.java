@@ -112,19 +112,23 @@ public class GameSceneObserver extends Panel implements IObserver, IScene {
 	@Override
 	public void mousePressed() {
 		
-		this.selectedX = eventManager.getSelectedX();
-		this.selectedY = eventManager.getSelectedY();
+		// on appuie sur le bouton de la souris : récupérer les coordonnées de la première case
+		selectedX = eventManager.getMouseEvent().getX() / 32;
+		selectedY = eventManager.getMouseEvent().getY() / 32;
+		
 	}
 	
 	@Override
 	public void mouseMoved() {
 		
-		this.swappedX = eventManager.getSwappedX();
-		this.swappedY = eventManager.getSwappedY();
-		
-		// si l'échange n'est pas valide, on cache la deuxième case
-        if(!algo.isValidSwap(selectedX, selectedY, swappedX, swappedY)) {
-            swappedX = swappedY = -1;
+		// on bouge la souris : récupérer les coordonnées de la deuxième case
+		if(selectedX != -1 && selectedY != -1) {
+            swappedX = eventManager.getMouseEvent().getX() / 32;
+            swappedY = eventManager.getMouseEvent().getY() / 32;
+            // si l'échange n'est pas valide, on cache la deuxième case
+            if(!algo.isValidSwap(selectedX, selectedY, swappedX, swappedY)) {
+                swappedX = swappedY = -1;
+            }
         }
 	}
 

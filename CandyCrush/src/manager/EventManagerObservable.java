@@ -8,7 +8,6 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 
-import scene.GameSceneObserver;
 import event.SoundEvent;
 
 /**
@@ -20,10 +19,7 @@ import event.SoundEvent;
 public final class EventManagerObservable implements IObservable, MouseListener, MouseMotionListener {
 
 	private SoundEvent soundEvent;
-	private int selectedX;
-	private int selectedY;
-	private int swappedX;
-	private int swappedY;
+	private MouseEvent mouseEvent;
 	private ArrayList<IObserver> observers;
 	private final Object MUTEX = new Object();
 
@@ -31,7 +27,6 @@ public final class EventManagerObservable implements IObservable, MouseListener,
 	private static EventManagerObservable INSTANCE = new EventManagerObservable();
 
 	private EventManagerObservable() {
-		selectedX = selectedY = swappedX = swappedY = -1;
 		this.observers = new ArrayList<>();
 	}
 
@@ -81,47 +76,30 @@ public final class EventManagerObservable implements IObservable, MouseListener,
 		}
 	}
 	
-
 	@Override
-	public void mouseMoved(MouseEvent e) {
-		// on bouge la souris : récupérer les coordonnées de la deuxième case
-		if(selectedX != -1 && selectedY != -1) {
-            swappedX = e.getX() / 32;
-            swappedY = e.getY() / 32;
-        }
-		notifyObserversMouseMoved();
+	public void mousePressed(MouseEvent mouseEvent) {
+		
+		this.mouseEvent = mouseEvent;
+		notifyObserversMousePressed();
 	}
 
 	@Override
-	public void mousePressed(MouseEvent e) {
-		// on appuie sur le bouton de la souris : récupérer les coordonnées de la première case
-		selectedX = e.getX() / 32;
-		selectedY = e.getY() / 32;
-		notifyObserversMousePressed();
+	public void mouseMoved(MouseEvent mouseEvent) {
+		
+		this.mouseEvent = mouseEvent;
+		notifyObserversMouseMoved();
 	}
 
 	
 	@Override
-	public void mouseReleased(MouseEvent e) {
+	public void mouseReleased(MouseEvent mouseEvent) {
 		// lorsque l'on relâche la souris il faut faire l'échange et cacher les cases
 		notifyObserversMouseReleased();
 	}
 	 
 	
-	public int getSelectedX() {
-		return selectedX;
-	}
-	
-	public int getSelectedY() {
-		return selectedY;
-	}
-	
-	public int getSwappedX() {
-		return swappedX;
-	}
-
-	public int getSwappedY() {
-		return swappedY;
+	public MouseEvent getMouseEvent() {
+		return mouseEvent;
 	}
 	
 	@Override
