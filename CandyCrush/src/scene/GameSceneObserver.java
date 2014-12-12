@@ -2,7 +2,6 @@ package scene;
 
 import graphics.Grid;
 import graphics.Marble;
-import iObserver.IObservable;
 import iObserver.IObserver;
 
 import java.awt.Color;
@@ -26,7 +25,9 @@ public class GameSceneObserver extends Panel implements IObserver, IScene {
 	private int swappedX;
 	private int swappedY;
 	private Grid grid;
-
+	
+	EventManagerObservable eventManager = EventManagerObservable.getInstance();
+	
 	public GameSceneObserver() {
 		selectedX = selectedY = swappedX = swappedY = -1;
 	}
@@ -35,8 +36,8 @@ public class GameSceneObserver extends Panel implements IObserver, IScene {
 		this.algo = algo;
 		this.grid = grid;
 		selectedX = selectedY = swappedX = swappedY = -1;
-		addMouseListener(EventManagerObservable.getInstance());
-		addMouseMotionListener(EventManagerObservable.getInstance());
+		addMouseListener(eventManager);
+		addMouseMotionListener(eventManager);
 	}
 
 	@Override
@@ -107,13 +108,35 @@ public class GameSceneObserver extends Panel implements IObserver, IScene {
 	public Dimension getPreferredSize() {
 		return new Dimension(32 * 8 + 1, 32 * 8 + 1);
 	}
-
+	
 	@Override
-	public void update(IObservable o) {
+	public void mousePressed() {
 		
-		EventManagerObservable eventManager = EventManagerObservable.getInstance();
 		this.selectedX = eventManager.getSelectedX();
 		this.selectedY = eventManager.getSelectedY();
-		System.out.println("Observer -> Case : [" + eventManager.getSelectedX() + " , "+ eventManager.getSelectedY() + "]");
 	}
+	
+	@Override
+	public void mouseMoved() {
+		
+		this.swappedX = eventManager.getSwappedX();
+		this.swappedY = eventManager.getSwappedY();
+		
+		// si l'échange n'est pas valide, on cache la deuxième case
+        if(!algo.isValidSwap(selectedX, selectedY, swappedX, swappedY)) {
+            swappedX = swappedY = -1;
+        }
+	}
+
+	@Override
+	public void mouseReleased() {
+
+		// lorsque l'on relâche la souris il faut faire l'échange et cacher les cases
+        if(selectedX != -1 && selectedY != -1 && swappedX != -1 && swappedY != -1) {
+            algo.swap(selectedX, selectedY, swappedX, swappedY);
+        }
+        selectedX = selectedY = swappedX = swappedY = -1;
+	}
+
+	
 }

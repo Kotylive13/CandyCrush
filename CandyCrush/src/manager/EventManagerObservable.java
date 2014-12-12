@@ -17,8 +17,7 @@ import event.SoundEvent;
  *
  */
 
-public final class EventManagerObservable implements IObservable,
-		MouseListener, MouseMotionListener {
+public final class EventManagerObservable implements IObservable, MouseListener, MouseMotionListener {
 
 	private SoundEvent soundEvent;
 	private int selectedX;
@@ -57,28 +56,40 @@ public final class EventManagerObservable implements IObservable,
 			observers.remove(o);
 		}
 	}
-
+	
 	@Override
-	public void notifyObservers() {
+	public void notifyObserversMousePressed() {
 		
 		for (IObserver observer : observers) {
-			observer.update(this);
+			observer.mousePressed();
 		}
 	}
 
 	@Override
+	public void notifyObserversMouseMoved() {
+		
+		for (IObserver observer : observers) {
+			observer.mouseMoved();
+		}
+	}
+	
+	@Override
+	public void notifyObserversMouseReleased() {
+		
+		for (IObserver observer : observers) {
+			observer.mouseReleased();
+		}
+	}
+	
+
+	@Override
 	public void mouseMoved(MouseEvent e) {
 		// on bouge la souris : récupérer les coordonnées de la deuxième case
-//		if (selectedX != -1 && selectedY != -1) {
-//			swappedX = e.getX() / 32;
-//			swappedY = e.getY() / 32;
-//			// si l'échange n'est pas valide, on cache la deuxième case
-//			if (!gameScene.getAlgo().isValidSwap(selectedX, selectedY, swappedX, swappedY)) {
-//				swappedX = swappedY = -1;
-//			}
-//		}
-//		gameScene.repaint();
-//		notifyObservers();
+		if(selectedX != -1 && selectedY != -1) {
+            swappedX = e.getX() / 32;
+            swappedY = e.getY() / 32;
+        }
+		notifyObserversMouseMoved();
 	}
 
 	@Override
@@ -86,19 +97,15 @@ public final class EventManagerObservable implements IObservable,
 		// on appuie sur le bouton de la souris : récupérer les coordonnées de la première case
 		selectedX = e.getX() / 32;
 		selectedY = e.getY() / 32;
-		notifyObservers();
+		notifyObserversMousePressed();
 	}
 
 	
-//	@Override
-//	public void mouseReleased(MouseEvent e) {
-//		// lorsque l'on relâche la souris il faut faire l'échange et cacher les cases
-//		if (selectedX != -1 && selectedY != -1 && swappedX != -1 && swappedY != -1) {
-//			gameScene.getAlgo().swap(selectedX, selectedY, swappedX, swappedY);
-//		}
-//	  selectedX = selectedY = swappedX = swappedY = -1;
-//	  gameScene.repaint();
-//	}
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// lorsque l'on relâche la souris il faut faire l'échange et cacher les cases
+		notifyObserversMouseReleased();
+	}
 	 
 	
 	public int getSelectedX() {
@@ -108,7 +115,15 @@ public final class EventManagerObservable implements IObservable,
 	public int getSelectedY() {
 		return selectedY;
 	}
+	
+	public int getSwappedX() {
+		return swappedX;
+	}
 
+	public int getSwappedY() {
+		return swappedY;
+	}
+	
 	@Override
 	public void mouseDragged(MouseEvent e) {
 		mouseMoved(e);
@@ -124,10 +139,6 @@ public final class EventManagerObservable implements IObservable,
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent arg0) {
 	}
 	
 }

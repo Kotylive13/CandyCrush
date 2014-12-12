@@ -6,7 +6,6 @@
 
 package main;
 
-import scene.GameSceneObserver;
 import graphics.window.Title;
 import graphics.window.Window;
 import manager.EventManagerObservable;
@@ -22,9 +21,9 @@ public class Game {
 		GameManager gameManager = GameManager.getInstance();
 		EventManagerObservable eventManager = EventManagerObservable.getInstance();
 		eventManager.addObserver(gameManager.getGameScene());
-			
+		
 		window.addFrame();
-        new Thread(new Run()).start();	
+        new Thread(new Run()).start();
 	}
 	
 }
