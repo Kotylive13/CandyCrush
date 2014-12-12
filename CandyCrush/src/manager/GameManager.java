@@ -11,7 +11,6 @@ import controler.GameControler;
 
 public class GameManager implements Serializable{
 
-	private Grid grid;
 	private Score score;
 	private GameSceneObserver gameScene;
 	private GameControler gameControler;
@@ -20,7 +19,6 @@ public class GameManager implements Serializable{
 	private static GameManager INSTANCE = new GameManager();
 
 	private GameManager() {
-		grid = new Grid();
 		score = new Score();
 		try {
 			gameControler = new GameControler();
@@ -40,20 +38,6 @@ public class GameManager implements Serializable{
 	/** Sécurité anti-désérialisation */
 	private Object readResolve() {
 		return INSTANCE;
-	}
-
-	/**
-	 * @return the grid
-	 */
-	public Grid getGrid() {
-		return grid;
-	}
-
-	/**
-	 * @param grid the grid to set
-	 */
-	public void setGrid(Grid grid) {
-		this.grid = grid;
 	}
 
 	/**

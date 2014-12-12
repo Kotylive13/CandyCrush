@@ -26,7 +26,7 @@ public class Algorithms {
 	boolean marked[][] = new boolean[8][8];
 
 	public Algorithms() throws InstantiationException, IllegalAccessException {
-		grid = new Grid(length, height);
+		grid = new Grid(height, length);
 		matrix = grid.getMatrix();
 		candyList = new ArrayList<Candy>();
 		CandyFactory candyFactory = new CandyFactory();
@@ -44,14 +44,17 @@ public class Algorithms {
 	// par le haut
 	public boolean fill() {
 		matrix = grid.getMatrix();
-		Candy candy;
+		boolean modified = false;
 		for (int i = 0; i < grid.getHeight(); i++) {
 			for (int j = grid.getLength() - 1; j >= 0; j--) {
-				modified = true;
-				candy = getRandomCandy();
-				candy.setPosX(i);
-				candy.setPosY(j);
-				matrix[i][j] = candy;
+				if (matrix[i][j] == null) {
+					Candy candy = new Candy();
+					candy = getRandomCandy();
+					candy.setPosX(i);
+					candy.setPosY(j);
+					matrix[i][j] = candy;
+					modified = true;
+				}
 			}
 		}
 		grid.setMatrix(matrix);

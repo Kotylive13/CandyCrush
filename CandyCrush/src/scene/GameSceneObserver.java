@@ -25,9 +25,9 @@ public class GameSceneObserver extends Panel implements IObserver, IScene {
 	private int swappedX;
 	private int swappedY;
 	private Grid grid;
-	
+
 	EventManagerObservable eventManager = EventManagerObservable.getInstance();
-	
+
 	public GameSceneObserver() {
 		selectedX = selectedY = swappedX = swappedY = -1;
 	}
@@ -70,16 +70,14 @@ public class GameSceneObserver extends Panel implements IObserver, IScene {
 		}
 
 		// afficher le contenu de la grille
+
 		Marble[][] gridMarble = (Marble[][]) grid.getMatrix();
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
-				// System.out.println(i+ ": i "+j+ " j");
-				// System.err.println(gridMarble[i][j].getColor());
 				g2.setColor(gridMarble[i][j].getColor());
 				g2.fillOval(32 * i + 3, 32 * j + 3, 27, 27);
 			}
 		}
-
 		// copier l'image à l'écran
 		g.drawImage(buffer, 0, 0, null);
 	}
@@ -108,39 +106,41 @@ public class GameSceneObserver extends Panel implements IObserver, IScene {
 	public Dimension getPreferredSize() {
 		return new Dimension(32 * 8 + 1, 32 * 8 + 1);
 	}
-	
+
 	@Override
 	public void mousePressed() {
-		
-		// on appuie sur le bouton de la souris : récupérer les coordonnées de la première case
+
+		// on appuie sur le bouton de la souris : récupérer les coordonnées de
+		// la première case
 		selectedX = eventManager.getMouseEvent().getX() / 32;
 		selectedY = eventManager.getMouseEvent().getY() / 32;
-		
+
 	}
-	
+
 	@Override
 	public void mouseMoved() {
-		
+
 		// on bouge la souris : récupérer les coordonnées de la deuxième case
-		if(selectedX != -1 && selectedY != -1) {
-            swappedX = eventManager.getMouseEvent().getX() / 32;
-            swappedY = eventManager.getMouseEvent().getY() / 32;
-            // si l'échange n'est pas valide, on cache la deuxième case
-            if(!algo.isValidSwap(selectedX, selectedY, swappedX, swappedY)) {
-                swappedX = swappedY = -1;
-            }
-        }
+		if (selectedX != -1 && selectedY != -1) {
+			swappedX = eventManager.getMouseEvent().getX() / 32;
+			swappedY = eventManager.getMouseEvent().getY() / 32;
+			// si l'échange n'est pas valide, on cache la deuxième case
+			if (!algo.isValidSwap(selectedX, selectedY, swappedX, swappedY)) {
+				swappedX = swappedY = -1;
+			}
+		}
 	}
 
 	@Override
 	public void mouseReleased() {
 
-		// lorsque l'on relâche la souris il faut faire l'échange et cacher les cases
-        if(selectedX != -1 && selectedY != -1 && swappedX != -1 && swappedY != -1) {
-            algo.swap(selectedX, selectedY, swappedX, swappedY);
-        }
-        selectedX = selectedY = swappedX = swappedY = -1;
+		// lorsque l'on relâche la souris il faut faire l'échange et cacher les
+		// cases
+		if (selectedX != -1 && selectedY != -1 && swappedX != -1
+				&& swappedY != -1) {
+			algo.swap(selectedX, selectedY, swappedX, swappedY);
+		}
+		selectedX = selectedY = swappedX = swappedY = -1;
 	}
 
-	
 }
