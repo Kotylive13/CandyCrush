@@ -32,9 +32,9 @@ public class GameSceneObserver extends Panel implements IObserver, IScene {
 		selectedX = selectedY = swappedX = swappedY = -1;
 	}
 
-	public GameSceneObserver(Algorithms algo, Grid grid) {
+	public GameSceneObserver(Algorithms algo) {
 		this.algo = algo;
-		this.grid = grid;
+		this.grid = algo.getGrid();
 		selectedX = selectedY = swappedX = swappedY = -1;
 		addMouseListener(eventManager);
 		addMouseMotionListener(eventManager);
@@ -42,6 +42,7 @@ public class GameSceneObserver extends Panel implements IObserver, IScene {
 
 	@Override
 	public void paint(Graphics g) {
+		try {
 		if (buffer == null)
 			buffer = createImage(800, 600);
 		Graphics2D g2 = (Graphics2D) buffer.getGraphics();
@@ -70,15 +71,17 @@ public class GameSceneObserver extends Panel implements IObserver, IScene {
 		}
 
 		// afficher le contenu de la grille
-			Marble[][] gridMarble = (Marble[][]) grid.getMatrix();
-			for (int i = 0; i < 8; i++) {
-				for (int j = 0; j < 8; j++) {
-					g2.setColor(gridMarble[i][j].getColor());
-					g2.fillOval(32 * i + 3, 32 * j + 3, 27, 27);
-				}
+		Marble[][] gridMarble = (Marble[][]) grid.getMatrix();
+		for (int i = 0; i < 8; i++) {
+			for (int j = 0; j < 8; j++) {
+				g2.setColor(gridMarble[i][j].getColor());
+				g2.fillOval(32 * i + 3, 32 * j + 3, 27, 27);
 			}
+		}
 		// copier l'image à l'écran
 		g.drawImage(buffer, 0, 0, null);
+		} catch (Exception e) {
+		}
 	}
 
 	@Override
