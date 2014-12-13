@@ -93,8 +93,7 @@ public final class EventManagerObservable implements IObservable, MouseListener,
 	
 	@Override
 	public void mouseReleased(MouseEvent mouseEvent) {
-		// lorsque l'on relâche la souris il faut faire l'échange et cacher les cases
-		this.mouseEvent = mouseEvent;
+		
 		notifyObserversMouseReleased();
 	}
 	 
