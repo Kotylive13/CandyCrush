@@ -21,7 +21,7 @@ public class AlgorithmsTest {
 
 	@Test
 	public void testFill() {
-		assertTrue(algo.fillAfterDestroyMarbles());
+		algo.fill();
 		for (int i = 0; i < algo.getGrid().getHeight(); i++) {
 			for (int j = 0; j < algo.getGrid().getLength(); j++) {
 				assertNotNull(algo.getGrid().getMatrix()[i][j]);
