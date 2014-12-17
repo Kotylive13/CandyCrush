@@ -20,7 +20,7 @@ public class AlgorithmsTest {
 
 	public AlgorithmsTest() throws InstantiationException,
 			IllegalAccessException {
-		algo = new Algorithms();
+		algo = new Algorithms(8,8);
 		assertNotNull(algo);
 	}
 

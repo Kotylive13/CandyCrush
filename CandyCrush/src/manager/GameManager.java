@@ -21,20 +21,19 @@ public class GameManager implements Serializable {
 	private GameControlerObserver gameControlerObserver;
 	private Algorithms algorithms;
 	private static final long serialVersionUID = 1;
-	
-	/** pre-initialised unique instance */
-	private static GameManager INSTANCE = new GameManager();
 
-	private GameManager() {
+	private static GameManager INSTANCE = new GameManager(8, 8);
+
+	private GameManager(int height, int length) {
 		score = new Score();
-		gameControlerObserver = new GameControlerObserver();
+		gameControlerObserver = new GameControlerObserver(height, length);
 		gameScene = new GameScene(gameControlerObserver.getAlgorithm());
 		gameScene.addObserver(gameControlerObserver);
 		gameScene.setGameManager(this);
 	}
 
-	public final static GameManager getInstance() throws InstantiationException,
-			IllegalAccessException {
+	public final static GameManager getInstance()
+			throws InstantiationException, IllegalAccessException {
 		return INSTANCE;
 	}
 

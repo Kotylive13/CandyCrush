@@ -47,7 +47,7 @@ public class Window {
 	
 	// taille de la fen�tre
 		public Dimension getPreferredSize() {
-			return new Dimension(32 * 9 + 1, 32 * 9 + 25);
+			return new Dimension(800, 600);
 		}
 		
 }

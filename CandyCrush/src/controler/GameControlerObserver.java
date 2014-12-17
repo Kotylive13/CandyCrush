@@ -26,8 +26,8 @@ public class GameControlerObserver implements IObserver {
 	private EventManagerObservable eventManager = EventManagerObservable
 			.getInstance();
 
-	public GameControlerObserver() {
-		algorithms = new Algorithms();
+	public GameControlerObserver(int height, int length) {
+		algorithms = new Algorithms(height, length);
 		algorithms.fill();
 		selectedX = selectedY = swappedX = swappedY = -1;
 		while (algorithms.removeAlignments())
@@ -45,18 +45,19 @@ public class GameControlerObserver implements IObserver {
 
 	@Override
 	public void mousePressed() {
-		
 		selectedX = eventManager.getMouseEvent().getX() / 32;
 		selectedY = eventManager.getMouseEvent().getY() / 32;
 	}
 
 	@Override
 	public void mouseMoved() {
-		if (selectedX != -1 && selectedY != -1 && selectedX < 8 && selectedY < 8 ) {
+		if (selectedX != -1 && selectedY != -1 && selectedX < 8
+				&& selectedY < 8) {
 			swappedX = eventManager.getMouseEvent().getX() / 32;
 			swappedY = eventManager.getMouseEvent().getY() / 32;
 			// si l'échange n'est pas valide, on cache la deuxième case
-			if (!algorithms.isValidSwap(selectedX, selectedY, swappedX, swappedY)) {
+			if (!algorithms.isValidSwap(selectedX, selectedY, swappedX,
+					swappedY)) {
 				swappedX = swappedY = -1;
 			}
 		}
@@ -68,19 +69,20 @@ public class GameControlerObserver implements IObserver {
 		// lorsque l'on relâche la souris il faut faire l'échange et cacher les
 		// cases
 		if (selectedX != -1 && selectedY != -1 && swappedX != -1
-				&& swappedY != -1 && selectedX < 8 && selectedY < 8 && swappedX < 8 && swappedY < 8) {
+				&& swappedY != -1 && selectedX < 8 && selectedY < 8
+				&& swappedX < 8 && swappedY < 8) {
 			algorithms.swap(selectedX, selectedY, swappedX, swappedY);
 			ActionListener actionListener = new ActionListener() {
-                public void actionPerformed(ActionEvent actionEvent) {
-                	while (algorithms.removeAlignments()) {
-        				while (algorithms.fillAfterDestroyMarbles()) {
-        				}
-        			}
-                }
-            };
-            Timer timer = new Timer(5, actionListener);
-            timer.start();
-			
+				public void actionPerformed(ActionEvent actionEvent) {
+					while (algorithms.removeAlignments()) {
+						while (algorithms.fillAfterDestroyMarbles()) {
+						}
+					}
+				}
+			};
+			Timer timer = new Timer(5, actionListener);
+			timer.start();
+
 		}
 		selectedX = selectedY = swappedX = swappedY = -1;
 	}
