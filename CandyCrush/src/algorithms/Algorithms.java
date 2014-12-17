@@ -23,7 +23,10 @@ public class Algorithms {
 	private int length = 8;
 	private int height = 8;
 	private List<Candy> candyList;
+	private Marble marble2;
+	private Candy candy2;
 	private boolean marked[][] = new boolean[length][height]; 	// To mark the unaligned boxes
+	private Random randomizer;
 
 	public Algorithms(int height, int length) {
 		grid = new Grid(height, length);
@@ -31,6 +34,10 @@ public class Algorithms {
 		candyList = new ArrayList<Candy>();
 		CandyFactory candyFactory = new CandyFactory();
 		candyList = candyFactory.createCandy(Marble.class);
+		randomizer = new Random();
+
+		marble2 = new Marble();
+		marble2.setColor(Color.WHITE);
 		initMarked();
 	}
 
@@ -45,7 +52,6 @@ public class Algorithms {
 		for (int i = 0; i < grid.getLength(); i++) {
 			for (int j = grid.getHeight() - 1; j >= 0; j--) {
 				if (matrix[i][j] == null) {
-					candy = new Marble();
 					candy = getRandomCandy();
 					candy.setPosX(i);
 					candy.setPosY(j);
@@ -61,16 +67,14 @@ public class Algorithms {
 	public boolean fillAfterDestroyMarbles() {
 		matrix = grid.getMatrix();
 		boolean modified = false;
-		Marble marble2 = new Marble();
-		marble2.setColor(Color.WHITE);
 		for (int i = 0; i < grid.getLength(); i++) {
 			for (int j = grid.getHeight() - 1; j >= 0; j--) {
-				if (((Marble)matrix[i][j]).getColor().equals(Color.WHITE)) {
+				if (((Marble)matrix[i][j]).getColor() == Color.WHITE) {
 					if (j == 0) {
-						Candy candy = getRandomCandy();
-						candy.setPosX(i);
-						candy.setPosY(j);
-						matrix[i][j] = candy;
+						candy2 = getRandomCandy();
+						candy2.setPosX(i);
+						candy2.setPosY(j);
+						matrix[i][j] = candy2;
 
 					} else {
 						marble2.setPosX(i);
@@ -82,15 +86,16 @@ public class Algorithms {
 				}
 			}
 		}
-		grid.setMatrix(matrix);
+		if (modified == true)
+			grid.setMatrix(matrix);
 		return modified;
 	}
 
 	public boolean horizontalAligned(int i, int j) {
 		if (i < 0 || j < 0 || i >= 6 || j >= 8)
 			return false;
-		if (((Marble)matrix[i][j]).getColor().equals(((Marble)matrix[i+1][j]).getColor())
-				&& ((Marble)matrix[i][j]).getColor().equals(((Marble)matrix[i+2][j]).getColor()))
+		if (((Marble)matrix[i][j]).getColor() == ((Marble)matrix[i+1][j]).getColor()
+				&& ((Marble)matrix[i][j]).getColor() == ((Marble)matrix[i+2][j]).getColor())
 			return true;
 		return false;
 	}
@@ -98,14 +103,13 @@ public class Algorithms {
 	public boolean verticalAligned(int i, int j) {
 		if (i < 0 || j < 0 || i >= 8 || j >= 6)
 			return false;
-		if (((Marble)matrix[i][j]).getColor().equals(((Marble)matrix[i][j+1]).getColor())
-				&& ((Marble)matrix[i][j]).getColor().equals(((Marble)matrix[i][j+2]).getColor()))
+		if (((Marble)matrix[i][j]).getColor() == ((Marble)matrix[i][j+1]).getColor()
+				&& ((Marble)matrix[i][j]).getColor() == ((Marble)matrix[i][j+2]).getColor())
 			return true;
 		return false;
 	}
 
 	private Candy getRandomCandy() {
-		Random randomizer = new Random();
 		return candyList.get(randomizer.nextInt(candyList.size()));
 	}
 
@@ -155,11 +159,11 @@ public class Algorithms {
 		// passe 1 : marquer tous les alignements
 		for (int i = 0; i < grid.getLength(); i++) {
 			for (int j = 0; j < grid.getHeight(); j++) {
-				if (!((Marble)matrix[i][j]).getColor().equals(Color.WHITE) && horizontalAligned(i, j)) {
+				if (((Marble)matrix[i][j]).getColor() != Color.WHITE && horizontalAligned(i, j)) {
 					modified = true;
 					marked[i][j] = marked[i + 1][j] = marked[i + 2][j] = true;
 				}
-				if (!((Marble)matrix[i][j]).getColor().equals(Color.WHITE) && verticalAligned(i, j)) {
+				if (((Marble)matrix[i][j]).getColor()  != Color.WHITE && verticalAligned(i, j)) {
 					modified = true;
 					marked[i][j] = marked[i][j + 1] = marked[i][j + 2] = true;
 				}
