@@ -13,12 +13,18 @@ public class CandyFactory {
 		
 	}
 	
-	public List<Candy> createCandy(Class<Marble> cls) throws InstantiationException, IllegalAccessException {
+	public List<Candy> createCandy(Class<Marble> cls){
 		List<Candy> candyList = new ArrayList<Candy>();
 		Color colors[] = { Color.BLACK, Color.RED, Color.GREEN, Color.BLUE,
 				Color.GRAY, Color.PINK, Color.CYAN };
 		for (int i = 0; i < colors.length; i++) {
-			Marble candy = cls.newInstance();
+			Marble candy = null;
+			try {
+				candy = cls.newInstance();
+			} catch (InstantiationException | IllegalAccessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			candy.setColor(colors[i]);
 			candyList.add(candy);
 		}

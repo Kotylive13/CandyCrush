@@ -26,7 +26,7 @@ public class Algorithms {
 	// pour marquer les cases non alignées
 	boolean marked[][] = new boolean[length][height];
 
-	public Algorithms() throws InstantiationException, IllegalAccessException {
+	public Algorithms() {
 		grid = new Grid(height, length);
 		matrix = grid.getMatrix();
 		candyList = new ArrayList<Candy>();

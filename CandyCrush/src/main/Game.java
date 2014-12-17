@@ -20,10 +20,8 @@ public class Game {
         
 		GameManager gameManager = GameManager.getInstance();
 		EventManagerObservable eventManager = EventManagerObservable.getInstance();
-		eventManager.addObserver(gameManager.getGameScene());
-		
+		eventManager.addObserver(gameManager.getGameScene());	
 		window.addFrame();
-        //new Thread(new Run()).start();
 	}
 	
 }
