@@ -42,7 +42,6 @@ public class GameSceneObserver extends Panel implements IObserver, IScene {
 
 	@Override
 	public void paint(Graphics g) {
-		try {
 		if (buffer == null)
 			buffer = createImage(800, 600);
 		Graphics2D g2 = (Graphics2D) buffer.getGraphics();
@@ -80,8 +79,6 @@ public class GameSceneObserver extends Panel implements IObserver, IScene {
 		}
 		// copier l'image à l'écran
 		g.drawImage(buffer, 0, 0, null);
-		} catch (Exception e) {
-		}
 	}
 
 	@Override
@@ -116,6 +113,7 @@ public class GameSceneObserver extends Panel implements IObserver, IScene {
 		// la première case
 		selectedX = eventManager.getMouseEvent().getX() / 32;
 		selectedY = eventManager.getMouseEvent().getY() / 32;
+		repaint();
 
 	}
 
@@ -129,8 +127,10 @@ public class GameSceneObserver extends Panel implements IObserver, IScene {
 			// si l'échange n'est pas valide, on cache la deuxième case
 			if (!algo.isValidSwap(selectedX, selectedY, swappedX, swappedY)) {
 				swappedX = swappedY = -1;
+				
 			}
 		}
+		repaint();
 	}
 
 	@Override
@@ -141,11 +141,13 @@ public class GameSceneObserver extends Panel implements IObserver, IScene {
 		if (selectedX != -1 && selectedY != -1 && swappedX != -1
 				&& swappedY != -1) {
 			algo.swap(selectedX, selectedY, swappedX, swappedY);
-			algo.removeAlignments();
-			System.out.println("coucou");
-			algo.fillAfterDestroyMarbles();
+			while (algo.removeAlignments()) {
+				while (algo.fillAfterDestroyMarbles()){}
+			}
+			
 		}
 		selectedX = selectedY = swappedX = swappedY = -1;
+		repaint();
 	}
 
 }

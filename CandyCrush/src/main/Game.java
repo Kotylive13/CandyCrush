@@ -23,7 +23,7 @@ public class Game {
 		eventManager.addObserver(gameManager.getGameScene());
 		
 		window.addFrame();
-        new Thread(new Run()).start();
+        //new Thread(new Run()).start();
 	}
 	
 }

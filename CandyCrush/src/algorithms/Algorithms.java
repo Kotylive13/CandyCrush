@@ -6,6 +6,7 @@ import graphics.Candy;
 import graphics.Grid;
 import graphics.Marble;
 
+import java.awt.Color;
 import java.util.ArrayList;
 /**
  * 
@@ -45,19 +46,25 @@ public class Algorithms {
 	 * @return
 	 */
 	public void fill() {
-		matrix = grid.getMatrix();
 		Candy candy;
 		for (int i = 0; i < grid.getLength(); i++) {
 			for (int j = grid.getHeight() - 1; j >= 0; j--) {
 				if (matrix[i][j] == null) {
-					candy = new Candy();
+					candy = new Marble();
 					candy = getRandomCandy();
 					candy.setPosX(i);
 					candy.setPosY(j);
-					matrix[i][j] = (Marble) candy;
+					matrix[i][j] = candy;
 				}
 			}
 		}
+//		for (int i = 0; i < grid.getLength(); i++) {
+//			for (int j = grid.getHeight() - 1; j >= 0; j--) {
+//				if (((Marble)matrix[i][j]).getColor() == null)
+//					System.out.println("coucouuuuuuuuu");
+//				System.out.println("lozlefjzoefkozkf");
+//			}
+//		}
 		grid.setMatrix(matrix);
 	}
 
@@ -67,19 +74,23 @@ public class Algorithms {
 		matrix = grid.getMatrix();
 		boolean modified = false;
 		Candy candy;
+		Marble marble = new Marble(0, 0, Color.WHITE);
 		for (int i = 0; i < grid.getLength(); i++) {
 			for (int j = grid.getHeight() - 1; j >= 0; j--) {
-				if (matrix[i][j] == null) {
+				marble.setPosX(i);
+				marble.setPosY(j);
+				if (((Marble)matrix[i][j]).getColor().equals(Color.WHITE)) {
 					if (j == 0) {
-						candy = new Candy();
+						candy = new Marble();
 						candy = getRandomCandy();
 						candy.setPosX(i);
 						candy.setPosY(j);
-						matrix[i][j] = (Marble)candy;
+						matrix[i][j] = candy;
 
 					} else {
+						Marble marble2 = new Marble(i, j-1, Color.WHITE);
 						matrix[i][j] = matrix[i][j - 1];
-						matrix[i][j - 1] = null;
+						matrix[i][j - 1] = marble2;
 					}
 					modified = true;
 				}
@@ -173,10 +184,12 @@ public class Algorithms {
 		if (modified == false)
 			return modified;
 		// passe 2 : supprimer les cases marqu�es
+		Marble marble2;
 		for (int i = 0; i < grid.getLength(); i++) {
 			for (int j = 0; j < grid.getHeight(); j++) {
 				if (marked[i][j]) {
-					matrix[i][j] = null;
+					marble2 = new Marble(i, j, Color.WHITE);
+					matrix[i][j] = marble2;
 					marked[i][j] = false;
 					modified = true;
 				}
