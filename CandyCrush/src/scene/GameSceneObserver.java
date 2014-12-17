@@ -42,7 +42,6 @@ public class GameSceneObserver extends Panel implements IObserver, IScene {
 
 	@Override
 	public void paint(Graphics g) {
-		try {
 		if (buffer == null)
 			buffer = createImage(800, 600);
 		Graphics2D g2 = (Graphics2D) buffer.getGraphics();
@@ -80,8 +79,6 @@ public class GameSceneObserver extends Panel implements IObserver, IScene {
 		}
 		// copier l'image à l'écran
 		g.drawImage(buffer, 0, 0, null);
-		} catch (Exception e) {
-		}
 	}
 
 	@Override
