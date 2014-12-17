@@ -92,8 +92,8 @@ public class Algorithms {
 		matrix = grid.getMatrix();
 		if (i < 0 || j < 0 || i >= 6 || j >= 8)
 			return false;
-		if (matrix[i][j].equals(matrix[i + 1][j])
-				&& matrix[i][j].equals(matrix[i + 2][j]))
+		if (((Marble)matrix[i][j]).getColor().equals(((Marble)matrix[i+1][j]).getColor())
+				&& ((Marble)matrix[i][j]).getColor().equals(((Marble)matrix[i+2][j]).getColor()))
 			return true;
 		return false;
 	}
@@ -102,8 +102,8 @@ public class Algorithms {
 		matrix = grid.getMatrix();
 		if (i < 0 || j < 0 || i >= 8 || j >= 6)
 			return false;
-		if (matrix[i][j].equals(matrix[i][j + 1])
-				&& matrix[i][j].equals(matrix[i][j + 2]))
+		if (((Marble)matrix[i][j]).getColor().equals(((Marble)matrix[i][j+1]).getColor())
+				&& ((Marble)matrix[i][j]).getColor().equals(((Marble)matrix[i][j+2]).getColor()))
 			return true;
 		return false;
 	}
@@ -189,5 +189,82 @@ public class Algorithms {
 
 	public synchronized Grid getGrid() {
 		return grid;
+	}
+
+	/**
+	 * @return the matrix
+	 */
+	public Candy[][] getMatrix() {
+		return matrix;
+	}
+
+	/**
+	 * @param matrix the matrix to set
+	 */
+	public void setMatrix(Candy[][] matrix) {
+		this.matrix = matrix;
+	}
+
+	/**
+	 * @return the length
+	 */
+	public int getLength() {
+		return length;
+	}
+
+	/**
+	 * @param length the length to set
+	 */
+	public void setLength(int length) {
+		this.length = length;
+	}
+
+	/**
+	 * @return the height
+	 */
+	public int getHeight() {
+		return height;
+	}
+
+	/**
+	 * @param height the height to set
+	 */
+	public void setHeight(int height) {
+		this.height = height;
+	}
+
+	/**
+	 * @return the candyList
+	 */
+	public List<Candy> getCandyList() {
+		return candyList;
+	}
+
+	/**
+	 * @param candyList the candyList to set
+	 */
+	public void setCandyList(List<Candy> candyList) {
+		this.candyList = candyList;
+	}
+
+	/**
+	 * @return the marked
+	 */
+	public boolean[][] getMarked() {
+		return marked;
+	}
+
+	/**
+	 * @param marked the marked to set
+	 */
+	public void setMarked(boolean[][] marked) {
+		this.marked = marked;
+	}
+
+	/**
+	 * @param grid the grid to set
+	 */
+	public void setGrid(Grid grid) {
+		this.grid = grid;
 	}
 }
