@@ -20,12 +20,12 @@ public class Run implements Runnable {
 			}
 			// s'il n'y a pas de case vide, chercher des alignements
 			try {
-				if (!GameManager.getInstance().getGameControler()
+				/*if (!GameManager.getInstance().getGameControler()
 						.getAlgorithm().fillAfterDestroyMarbles()) {
 					//System.out.println("boubou");
 					GameManager.getInstance().getGameControler().getAlgorithm()
 							.removeAlignments();
-				}
+				}*/
 				// redessiner
 				GameManager.getInstance().getGameScene().repaint();
 			} catch (InstantiationException | IllegalAccessException e) {

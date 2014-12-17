@@ -8,7 +8,7 @@ public class GameControler {
 	public GameControler() throws InstantiationException, IllegalAccessException {
 		algorithm = new Algorithms();
 		algorithm.fill();
-		//algorithm.removeAlignments();
+		algorithm.removeAlignments();
 	}
 	
 	public Algorithms getAlgorithm() {
