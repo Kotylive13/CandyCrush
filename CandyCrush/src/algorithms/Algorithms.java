@@ -22,8 +22,7 @@ public class Algorithms {
 	private int height = 8;
 	private List<Candy> candyList;
 	private boolean modified = false;
-	// pour marquer les cases non alignées
-	boolean marked[][] = new boolean[8][8];
+	boolean marked[][] = new boolean[8][8];			// mark the non-aligned boxes
 
 	public Algorithms() throws InstantiationException, IllegalAccessException {
 		grid = new Grid(height, length);
@@ -40,8 +39,7 @@ public class Algorithms {
 				marked[i][j] = false;
 	}
 
-	// remplir les cases vides par gravit�, et g�n�rer des cases al�atoirement
-	// par le haut
+	// fill the empty boxes by and generate random boxes from the top
 	public boolean fill() {
 		matrix = grid.getMatrix();
 		boolean modified = false;
@@ -91,7 +89,7 @@ public class Algorithms {
 		return candyList.get(randomizer.nextInt(candyList.size()));
 	}
 
-	// d�termine si l'�change entre deux cases est valide
+	// determine if the exchange between two bowes is valid
 	public boolean isValidSwap(int x1, int y1, int x2, int y2) {
 		matrix = grid.getMatrix();
 		// il faut que les cases soient dans la grille
@@ -104,10 +102,10 @@ public class Algorithms {
 		if (matrix[x1][y1].equals(matrix[x2][y2]))
 			return false;
 
-		// alors on effectue l'�change
+		// alors on effectue l'échange
 		swap(x1, y1, x2, y2);
 
-		// et on vérifie que �a cr�� un nouvel alignement
+		// et on vérifie que ça crée un nouvel alignement
 		boolean newAlignment = false;
 		for (int i = 0; i < 3; i++) {
 			newAlignment |= horizontalAligned(x1 - i, y1);
@@ -148,7 +146,7 @@ public class Algorithms {
 		}
 		if (modified == false)
 			return modified;
-		// passe 2 : supprimer les cases marqu�es
+		// passe 2 : supprimer les cases marquées
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
 				if (marked[i][j]) {

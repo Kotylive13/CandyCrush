@@ -9,6 +9,10 @@ import java.util.List;
 
 public class CandyFactory {
 
+	public CandyFactory() {
+		
+	}
+	
 	public List<Candy> createCandy(Class<Marble> cls) throws InstantiationException, IllegalAccessException {
 		List<Candy> candyList = new ArrayList<Candy>();
 		Color colors[] = { Color.BLACK, Color.RED, Color.GREEN, Color.BLUE,
