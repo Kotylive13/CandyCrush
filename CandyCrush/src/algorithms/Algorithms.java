@@ -18,7 +18,7 @@ import java.util.Random;
 public class Algorithms {
 
 	private Grid grid;
-	private Candy[][] matrix;
+	private Marble[][] matrix;
 	private int length = 8;
 	private int height = 8;
 	private List<Candy> candyList;
@@ -27,7 +27,7 @@ public class Algorithms {
 
 	public Algorithms() throws InstantiationException, IllegalAccessException {
 		grid = new Grid(height, length);
-		matrix = grid.getMatrix();
+		matrix = (Marble[][])grid.getMatrix();
 		candyList = new ArrayList<Candy>();
 		CandyFactory candyFactory = new CandyFactory();
 		candyList = candyFactory.createCandy(Marble.class);
@@ -40,25 +40,52 @@ public class Algorithms {
 				marked[i][j] = false;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
+	public void fill() {
+		matrix = (Marble[][])grid.getMatrix();
+		Candy candy;
+		for (int i = 0; i < grid.getLength(); i++) {
+			for (int j = grid.getHeight() - 1; j >= 0; j--) {
+				if (matrix[i][j] == null) {
+					candy = new Candy();
+					candy = getRandomCandy();
+					candy.setPosX(i);
+					candy.setPosY(j);
+					matrix[i][j] = (Marble) candy;
+				}
+			}
+		}
+		System.out.println("boubou1");
+		for (int i = 0; i < grid.getLength(); i++) {
+			for (int j = grid.getHeight() - 1; j >= 0; j--) {
+				System.out.println(matrix[i][j].getColor());
+			}
+		}
+		grid.setMatrix(matrix);
+	}
+
 	// remplir les cases vides par gravit�, et g�n�rer des cases al�atoirement
 	// par le haut
-	public boolean fill() {
-		matrix = grid.getMatrix();
+	public boolean fillAfterDestroyMarbles() {
+		matrix = (Marble[][])grid.getMatrix();
 		boolean modified = false;
 		Candy candy;
-		for (int i = 0; i < grid.getHeight(); i++) {
-			for (int j = grid.getLength() - 1; j >= 0; j--) {
-				if (matrix[i][j] == null) {				
+		for (int i = 0; i < grid.getLength(); i++) {
+			for (int j = grid.getHeight() - 1; j >= 0; j--) {
+				if (matrix[i][j] == null) {
 					if (j == 0) {
-						candy =  new Candy();
+						candy = new Candy();
 						candy = getRandomCandy();
 						candy.setPosX(i);
 						candy.setPosY(j);
-						matrix[i][j] = candy;
-						
+						matrix[i][j] = (Marble)candy;
+
 					} else {
 						matrix[i][j] = matrix[i][j - 1];
-						matrix[i][j-1] = null;
+						matrix[i][j - 1] = null;
 					}
 					modified = true;
 				}
@@ -69,7 +96,7 @@ public class Algorithms {
 	}
 
 	public boolean horizontalAligned(int i, int j) {
-		matrix = grid.getMatrix();
+		matrix = (Marble[][])grid.getMatrix();
 		if (i < 0 || j < 0 || i >= 6 || j >= 8)
 			return false;
 		if (matrix[i][j].equals(matrix[i + 1][j])
@@ -79,7 +106,7 @@ public class Algorithms {
 	}
 
 	public boolean verticalAligned(int i, int j) {
-		matrix = grid.getMatrix();
+		matrix = (Marble[][])grid.getMatrix();
 		if (i < 0 || j < 0 || i >= 8 || j >= 6)
 			return false;
 		if (matrix[i][j].equals(matrix[i][j + 1])
@@ -95,7 +122,7 @@ public class Algorithms {
 
 	// d�termine si l'�change entre deux cases est valide
 	public boolean isValidSwap(int x1, int y1, int x2, int y2) {
-		matrix = grid.getMatrix();
+		matrix = (Marble[][])grid.getMatrix();
 		// il faut que les cases soient dans la grille
 		if (x1 == -1 || x2 == -1 || y1 == -1 || y2 == -1)
 			return false;
@@ -125,19 +152,20 @@ public class Algorithms {
 
 	// échanger le contenu de deux cases
 	public void swap(int x1, int y1, int x2, int y2) {
-		matrix = grid.getMatrix();
-		Candy tmp = matrix[x1][y1];
+		matrix = (Marble[][])grid.getMatrix();
+		Marble tmp = matrix[x1][y1];
 		matrix[x1][y1] = matrix[x2][y2];
 		matrix[x2][y2] = tmp;
+		grid.setMatrix(matrix);
 	}
 
 	// supprimer les alignements
 	public boolean removeAlignments() {
-		matrix = grid.getMatrix();
+		matrix = (Marble[][])grid.getMatrix();
 		boolean modified = false;
 		// passe 1 : marquer tous les alignements
-		for (int i = 0; i < 8; i++) {
-			for (int j = 0; j < 8; j++) {
+		for (int i = 0; i < grid.getLength(); i++) {
+			for (int j = 0; j < grid.getHeight(); j++) {
 				if (matrix[i][j] != null && horizontalAligned(i, j)) {
 					modified = true;
 					marked[i][j] = marked[i + 1][j] = marked[i + 2][j] = true;
@@ -150,19 +178,19 @@ public class Algorithms {
 		}
 		if (modified == false)
 			return modified;
+
+		System.out.println("boubou");
 		// passe 2 : supprimer les cases marqu�es
-		for (int i = 0; i < 8; i++) {
-			for (int j = 0; j < 8; j++) {
+		for (int i = 0; i < grid.getLength(); i++) {
+			for (int j = 0; j < grid.getHeight(); j++) {
 				if (marked[i][j]) {
-					System.out.println("i: " + i + " j : " + j);
 					matrix[i][j] = null;
 					marked[i][j] = false;
 					modified = true;
 				}
 			}
 		}
-		if (!grid.getMatrix().equals(matrix))
-			grid.setMatrix(matrix);
+		grid.setMatrix(matrix);
 		return modified;
 	}
 

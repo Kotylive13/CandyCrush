@@ -141,6 +141,9 @@ public class GameSceneObserver extends Panel implements IObserver, IScene {
 		if (selectedX != -1 && selectedY != -1 && swappedX != -1
 				&& swappedY != -1) {
 			algo.swap(selectedX, selectedY, swappedX, swappedY);
+			algo.removeAlignments();
+			System.out.println("coucou");
+			algo.fillAfterDestroyMarbles();
 		}
 		selectedX = selectedY = swappedX = swappedY = -1;
 	}
