@@ -7,6 +7,12 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 
+ * @author Philippe & Marcel
+ *
+ */
+
 public class CandyFactory {
 
 	public CandyFactory() {

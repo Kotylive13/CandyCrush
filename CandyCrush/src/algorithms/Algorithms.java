@@ -7,13 +7,14 @@ import graphics.Marble;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 /**
  * 
  * @author Philippe & Marcel
  *
  */
-import java.util.List;
-import java.util.Random;
 
 public class Algorithms {
 
@@ -22,8 +23,7 @@ public class Algorithms {
 	private int length = 8;
 	private int height = 8;
 	private List<Candy> candyList;
-	// pour marquer les cases non alignées
-	boolean marked[][] = new boolean[length][height];
+	private boolean marked[][] = new boolean[length][height]; 	// To mark the unaligned boxes
 
 	public Algorithms() {
 		grid = new Grid(height, length);
@@ -40,10 +40,6 @@ public class Algorithms {
 				marked[i][j] = false;
 	}
 
-	/**
-	 * 
-	 * @return
-	 */
 	public void fill() {
 		Candy candy;
 		for (int i = 0; i < grid.getLength(); i++) {

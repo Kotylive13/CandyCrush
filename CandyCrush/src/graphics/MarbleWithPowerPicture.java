@@ -4,16 +4,23 @@ import graphics.power.IPower;
 
 import java.awt.Color;
 
-public class MarblePower extends Marble{
+/**
+ * 
+ * @author Philippe & Marcel
+ *
+ */
+
+public class MarbleWithPowerPicture extends Marble{
 
 	private int posX;
 	private int posY;
 	private Color color;
 	private IPower iPower;
+	private Picture picture;
 	
-	public MarblePower() {}
+	public MarbleWithPowerPicture() {}
 	
-	public MarblePower(int posX, int posY, Color color, IPower iPower) {
+	public MarbleWithPowerPicture(int posX, int posY, Color color, IPower iPower) {
 		super(posX, posY, color);
 		this.posX = posX;
 		this.posY = posY;
@@ -76,6 +83,4 @@ public class MarblePower extends Marble{
 	public void setPower(IPower iPower) {
 		this.iPower = iPower;
 	}
-	
-	
 }

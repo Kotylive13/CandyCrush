@@ -2,7 +2,14 @@ package graphics;
 
 import java.awt.Color;
 
+/**
+ * 
+ * @author Philippe & Marcel
+ *
+ */
+
 public class Marble extends Candy{
+	
 	private int posX;
 	private int posY;
 	private Color color;
@@ -57,6 +64,4 @@ public class Marble extends Candy{
 	public void setColor(Color color) {
 		this.color = color;
 	}
-	
-	
 }

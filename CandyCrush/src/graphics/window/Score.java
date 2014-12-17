@@ -1,5 +1,11 @@
 package graphics.window;
 
+/**
+ * 
+ * @author Philippe & Marcel
+ *
+ */
+
 public class Score {
 
 	private int score;
