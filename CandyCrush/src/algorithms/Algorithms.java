@@ -22,7 +22,6 @@ public class Algorithms {
 	private int length = 8;
 	private int height = 8;
 	private List<Candy> candyList;
-	private boolean modified = false;
 	// pour marquer les cases non alignées
 	boolean marked[][] = new boolean[height][length];
 
