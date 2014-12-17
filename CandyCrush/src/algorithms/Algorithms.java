@@ -25,7 +25,7 @@ public class Algorithms {
 	private List<Candy> candyList;
 	private boolean marked[][] = new boolean[length][height]; 	// To mark the unaligned boxes
 
-	public Algorithms() {
+	public Algorithms(int height, int length) {
 		grid = new Grid(height, length);
 		matrix = grid.getMatrix();
 		candyList = new ArrayList<Candy>();
@@ -117,7 +117,7 @@ public class Algorithms {
 	public boolean isValidSwap(int x1, int y1, int x2, int y2) {
 		matrix = (Marble[][])grid.getMatrix();
 		// il faut que les cases soient dans la grille
-		if (x1 == -1 || x2 == -1 || y1 == -1 || y2 == -1)
+		if (x1 == -1 || x2 == -1 || y1 == -1 || y2 == -1 || x1 > 7 || x2 > 7 || y1 > 7 || y2 > 7)
 			return false;
 		// que les cases soient � c�t� l'une de l'autre
 		if (Math.abs(x2 - x1) + Math.abs(y2 - y1) != 1)

@@ -15,11 +15,11 @@ public class GameManager implements Serializable {
 	private GameControlerObserver gameControlerObserver;
 	private Algorithms algorithms;
 	private static final long serialVersionUID = 1;
-	private static GameManager INSTANCE = new GameManager();
+	private static GameManager INSTANCE = new GameManager(8, 8);
 
-	private GameManager() {
+	private GameManager(int height, int length) {
 		score = new Score();
-		gameControlerObserver = new GameControlerObserver();
+		gameControlerObserver = new GameControlerObserver(height, length);
 		gameScene = new GameScene(gameControlerObserver.getAlgorithm());
 		gameScene.addObserver(gameControlerObserver);
 		gameScene.setGameManager(this);

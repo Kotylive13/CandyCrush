@@ -26,8 +26,8 @@ public class GameControlerObserver implements IObserver {
 	private EventManagerObservable eventManager = EventManagerObservable
 			.getInstance();
 
-	public GameControlerObserver() {
-		algorithm = new Algorithms();
+	public GameControlerObserver(int height, int length) {
+		algorithm = new Algorithms(height, length);
 		algorithm.fill();
 		selectedX = selectedY = swappedX = swappedY = -1;
 		while (algorithm.removeAlignments())
@@ -45,7 +45,6 @@ public class GameControlerObserver implements IObserver {
 
 	@Override
 	public void mousePressed() {
-		
 		selectedX = eventManager.getMouseEvent().getX() / 32;
 		selectedY = eventManager.getMouseEvent().getY() / 32;
 	}
