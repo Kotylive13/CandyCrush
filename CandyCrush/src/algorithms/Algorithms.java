@@ -61,18 +61,20 @@ public class Algorithms {
 	public boolean fillAfterDestroyMarbles() {
 		matrix = grid.getMatrix();
 		boolean modified = false;
+		Marble marble2 = new Marble();
+		marble2.setColor(Color.WHITE);
 		for (int i = 0; i < grid.getLength(); i++) {
 			for (int j = grid.getHeight() - 1; j >= 0; j--) {
 				if (((Marble)matrix[i][j]).getColor().equals(Color.WHITE)) {
 					if (j == 0) {
-						Candy candy = new Marble();
-						candy = getRandomCandy();
+						Candy candy = getRandomCandy();
 						candy.setPosX(i);
 						candy.setPosY(j);
 						matrix[i][j] = candy;
 
 					} else {
-						Marble marble2 = new Marble(i, j-1, Color.WHITE);
+						marble2.setPosX(i);
+						marble2.setPosY(j);
 						matrix[i][j] = matrix[i][j - 1];
 						matrix[i][j - 1] = marble2;
 					}
@@ -85,7 +87,6 @@ public class Algorithms {
 	}
 
 	public boolean horizontalAligned(int i, int j) {
-		matrix = grid.getMatrix();
 		if (i < 0 || j < 0 || i >= 6 || j >= 8)
 			return false;
 		if (((Marble)matrix[i][j]).getColor().equals(((Marble)matrix[i+1][j]).getColor())
@@ -95,7 +96,6 @@ public class Algorithms {
 	}
 
 	public boolean verticalAligned(int i, int j) {
-		matrix = grid.getMatrix();
 		if (i < 0 || j < 0 || i >= 8 || j >= 6)
 			return false;
 		if (((Marble)matrix[i][j]).getColor().equals(((Marble)matrix[i][j+1]).getColor())
@@ -111,7 +111,7 @@ public class Algorithms {
 
 	// determine if the exchange between two bowes is valid
 	public boolean isValidSwap(int x1, int y1, int x2, int y2) {
-		matrix = (Marble[][])grid.getMatrix();
+		matrix = grid.getMatrix();
 		// il faut que les cases soient dans la grille
 		if (x1 == -1 || x2 == -1 || y1 == -1 || y2 == -1 || x1 > 7 || x2 > 7 || y1 > 7 || y2 > 7)
 			return false;
