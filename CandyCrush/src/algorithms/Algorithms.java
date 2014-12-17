@@ -25,7 +25,9 @@ public class Algorithms {
 	private List<Candy> candyList;
 	private Marble marble2;
 	private Candy candy2;
-	private boolean marked[][] = new boolean[length][height]; 	// To mark the unaligned boxes
+	private boolean marked[][] = new boolean[length][height]; // To mark the
+																// unaligned
+																// boxes
 	private Random randomizer;
 
 	public Algorithms(int height, int length) {
@@ -35,7 +37,6 @@ public class Algorithms {
 		CandyFactory candyFactory = new CandyFactory();
 		candyList = candyFactory.createCandy(Marble.class);
 		randomizer = new Random();
-
 		marble2 = new Marble();
 		marble2.setColor(Color.WHITE);
 		initMarked();
@@ -69,7 +70,7 @@ public class Algorithms {
 		boolean modified = false;
 		for (int i = 0; i < grid.getLength(); i++) {
 			for (int j = grid.getHeight() - 1; j >= 0; j--) {
-				if (((Marble)matrix[i][j]).getColor() == Color.WHITE) {
+				if (((Marble) matrix[i][j]).getColor() == Color.WHITE) {
 					if (j == 0) {
 						candy2 = getRandomCandy();
 						candy2.setPosX(i);
@@ -92,20 +93,27 @@ public class Algorithms {
 	}
 
 	public boolean horizontalAligned(int i, int j) {
+		matrix = grid.getMatrix();
 		if (i < 0 || j < 0 || i >= 6 || j >= 8)
 			return false;
-		if (((Marble)matrix[i][j]).getColor() == ((Marble)matrix[i+1][j]).getColor()
-				&& ((Marble)matrix[i][j]).getColor() == ((Marble)matrix[i+2][j]).getColor())
+		if (((Marble) matrix[i][j]).getColor().equals(
+				((Marble) matrix[i + 1][j]).getColor())
+				&& ((Marble) matrix[i][j]).getColor().equals(
+						((Marble) matrix[i + 2][j]).getColor()))
 			return true;
 		return false;
 	}
 
 	public boolean verticalAligned(int i, int j) {
+		matrix = grid.getMatrix();
 		if (i < 0 || j < 0 || i >= 8 || j >= 6)
 			return false;
-		if (((Marble)matrix[i][j]).getColor() == ((Marble)matrix[i][j+1]).getColor()
-				&& ((Marble)matrix[i][j]).getColor() == ((Marble)matrix[i][j+2]).getColor())
+		if (((Marble) matrix[i][j]).getColor().equals(
+				((Marble) matrix[i][j + 1]).getColor())
+				&& ((Marble) matrix[i][j]).getColor().equals(
+						((Marble) matrix[i][j + 2]).getColor())) {
 			return true;
+		}
 		return false;
 	}
 
@@ -117,7 +125,8 @@ public class Algorithms {
 	public boolean isValidSwap(int x1, int y1, int x2, int y2) {
 		matrix = grid.getMatrix();
 		// il faut que les cases soient dans la grille
-		if (x1 == -1 || x2 == -1 || y1 == -1 || y2 == -1 || x1 > 7 || x2 > 7 || y1 > 7 || y2 > 7)
+		if (x1 == -1 || x2 == -1 || y1 == -1 || y2 == -1 || x1 > 7 || x2 > 7
+				|| y1 > 7 || y2 > 7)
 			return false;
 		// que les cases soient � c�t� l'une de l'autre
 		if (Math.abs(x2 - x1) + Math.abs(y2 - y1) != 1)
@@ -159,11 +168,13 @@ public class Algorithms {
 		// passe 1 : marquer tous les alignements
 		for (int i = 0; i < grid.getLength(); i++) {
 			for (int j = 0; j < grid.getHeight(); j++) {
-				if (((Marble)matrix[i][j]).getColor() != Color.WHITE && horizontalAligned(i, j)) {
+				if (((Marble) matrix[i][j]).getColor() != Color.WHITE
+						&& horizontalAligned(i, j)) {
 					modified = true;
 					marked[i][j] = marked[i + 1][j] = marked[i + 2][j] = true;
 				}
-				if (((Marble)matrix[i][j]).getColor()  != Color.WHITE && verticalAligned(i, j)) {
+				if (((Marble) matrix[i][j]).getColor() != Color.WHITE
+						&& verticalAligned(i, j)) {
 					modified = true;
 					marked[i][j] = marked[i][j + 1] = marked[i][j + 2] = true;
 				}
@@ -197,7 +208,8 @@ public class Algorithms {
 	}
 
 	/**
-	 * @param matrix the matrix to set
+	 * @param matrix
+	 *            the matrix to set
 	 */
 	public void setMatrix(Candy[][] matrix) {
 		this.matrix = matrix;
@@ -211,7 +223,8 @@ public class Algorithms {
 	}
 
 	/**
-	 * @param length the length to set
+	 * @param length
+	 *            the length to set
 	 */
 	public void setLength(int length) {
 		this.length = length;
@@ -225,7 +238,8 @@ public class Algorithms {
 	}
 
 	/**
-	 * @param height the height to set
+	 * @param height
+	 *            the height to set
 	 */
 	public void setHeight(int height) {
 		this.height = height;
@@ -239,7 +253,8 @@ public class Algorithms {
 	}
 
 	/**
-	 * @param candyList the candyList to set
+	 * @param candyList
+	 *            the candyList to set
 	 */
 	public void setCandyList(List<Candy> candyList) {
 		this.candyList = candyList;
@@ -253,14 +268,16 @@ public class Algorithms {
 	}
 
 	/**
-	 * @param marked the marked to set
+	 * @param marked
+	 *            the marked to set
 	 */
 	public void setMarked(boolean[][] marked) {
 		this.marked = marked;
 	}
 
 	/**
-	 * @param grid the grid to set
+	 * @param grid
+	 *            the grid to set
 	 */
 	public void setGrid(Grid grid) {
 		this.grid = grid;

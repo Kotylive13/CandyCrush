@@ -90,6 +90,7 @@ public class GameControlerObserver implements IObserver {
 			while (algorithms.removeAlignments()) {
 				while (algorithms.fillAfterDestroyMarbles()) {}
 			}
+			//timer.start();
 		}
 		selectedX = selectedY = swappedX = swappedY = -1;
 	}

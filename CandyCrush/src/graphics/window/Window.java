@@ -17,10 +17,11 @@ public class Window {
 
 	private Title title;
 	private GameManager gameManager;
-	
-	public Window(){}
-	
-	public Window (Title title){
+
+	public Window() {
+	}
+
+	public Window(Title title) {
 		this.title = title;
 		try {
 			this.gameManager = GameManager.getInstance();
@@ -28,27 +29,27 @@ public class Window {
 			e.printStackTrace();
 		}
 	}
-	
-	public void addFrame(){
+
+	public void addFrame() {
 		Frame frame = new Frame(title.getTitle());
 		frame.setSize(getPreferredSize());
 		frame.setMinimumSize(getPreferredSize());
 		frame.setMaximumSize(getPreferredSize());
 		frame.setResizable(false);
 		frame.addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent event) {
-                System.exit(0);
-            }
-        });
-        frame.add(gameManager.getGameScene());
-        frame.setLocationRelativeTo(null);
-        frame.pack();
-        frame.setVisible(true);
+			public void windowClosing(WindowEvent event) {
+				System.exit(0);
+			}
+		});
+		frame.add(gameManager.getGameScene());
+		frame.setLocationRelativeTo(null);
+		frame.pack();
+		frame.setVisible(true);
 	}
-	
+
 	// taille de la fen�tre
-		public Dimension getPreferredSize() {
-			return new Dimension(300, 300);
-		}
-		
+	public Dimension getPreferredSize() {
+		return new Dimension(300, 300);
+	}
+
 }

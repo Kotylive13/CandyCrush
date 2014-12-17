@@ -1,15 +1,11 @@
 package tests.algorithms;
 
-import static org.junit.Assert.*;
-
-import java.awt.Color;
-
-import graphics.Candy;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 import graphics.Marble;
 
-import javax.annotation.PostConstruct;
-
-import junit.framework.Assert;
+import java.awt.Color;
 
 import org.junit.Test;
 
@@ -20,7 +16,7 @@ public class AlgorithmsTest {
 
 	public AlgorithmsTest() throws InstantiationException,
 			IllegalAccessException {
-		algo = new Algorithms(8,8);
+		algo = new Algorithms(8, 8);
 		assertNotNull(algo);
 	}
 
@@ -37,7 +33,6 @@ public class AlgorithmsTest {
 	@Test
 	public void testHorizontalAligned() {
 
-		
 		Marble[][] matrix = new Marble[8][8];
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
@@ -58,9 +53,8 @@ public class AlgorithmsTest {
 			}
 		}
 		algo.getGrid().setMatrix(matrix);
-		assertTrue(algo.verticalAligned(1, 3));
+		assertTrue(algo.verticalAligned(0, 0));
 	}
-
 
 	@Test
 	public void testIsValidSwap() {
@@ -86,7 +80,9 @@ public class AlgorithmsTest {
 		algo.removeAlignments();
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
-				assertEquals(((Marble)algo.getGrid().getMatrix()[i][j]).getColor(), Color.WHITE);
+				assertEquals(
+						((Marble) algo.getGrid().getMatrix()[i][j]).getColor(),
+						Color.WHITE);
 			}
 		}
 	}
