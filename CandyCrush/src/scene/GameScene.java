@@ -116,11 +116,6 @@ public class GameScene extends Panel implements IObserver, IScene, IObservable {
 		this.algo = algo;
 	}
 
-	// taille de la fen�tre
-	public Dimension getPreferredSize() {
-		return new Dimension(32 * 8 + 1, 32 * 8 + 1);
-	}
-
 	@Override
 	public void mousePressed() {
 		notifyObserversMousePressed();

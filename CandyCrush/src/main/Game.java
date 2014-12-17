@@ -1,6 +1,5 @@
 /**
  * 
- * @author Philippe & Marcel
  *
  */
 
