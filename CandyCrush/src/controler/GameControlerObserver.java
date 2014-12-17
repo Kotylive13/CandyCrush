@@ -30,7 +30,7 @@ public class GameControlerObserver implements IObserver {
 	public GameControlerObserver(int height, int length) {
 		algorithms = new Algorithms(height, length);
 		algorithms.fill();
-		createTimer(75);
+		createTimer(100);
 		selectedX = selectedY = swappedX = swappedY = -1;
 		while (algorithms.removeAlignments()) {
 			while (algorithms.fillAfterDestroyMarbles()) {
@@ -41,13 +41,13 @@ public class GameControlerObserver implements IObserver {
 	private void createTimer(int time) {
 		ActionListener actionListener = new ActionListener() {
 			public void actionPerformed(ActionEvent actionEvent) {
-				if (!algorithms.removeAlignments()) {
-					algorithms.fillAfterDestroyMarbles();	
+				if (!algorithms.fillAfterDestroyMarbles() && !algorithms.removeAlignments()) {
+					timer.stop();
 				}
+				
 			}
 		};
 		timer = new Timer(time, actionListener);
-		timer.setRepeats(true);
 	}
 
 	public Algorithms getAlgorithm() {
@@ -88,7 +88,6 @@ public class GameControlerObserver implements IObserver {
 				&& swappedX < 8 && swappedY < 8) {
 			algorithms.swap(selectedX, selectedY, swappedX, swappedY);
 			timer.start();
-
 		}
 		selectedX = selectedY = swappedX = swappedY = -1;
 	}
