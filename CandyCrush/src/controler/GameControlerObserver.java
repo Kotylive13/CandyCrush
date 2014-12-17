@@ -52,12 +52,7 @@ public class GameControlerObserver implements IObserver {
 
 	@Override
 	public void mouseMoved() {
-<<<<<<< HEAD
 		if (selectedX != -1 && selectedY != -1 && selectedX < 8 && selectedY < 8 ) {
-=======
-		
-		if (selectedX != -1 && selectedY != -1) {
->>>>>>> origin/master
 			swappedX = eventManager.getMouseEvent().getX() / 32;
 			swappedY = eventManager.getMouseEvent().getY() / 32;
 			// si l'échange n'est pas valide, on cache la deuxième case
