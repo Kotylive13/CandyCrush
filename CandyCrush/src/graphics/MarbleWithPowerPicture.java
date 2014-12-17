@@ -1,5 +1,7 @@
 package graphics;
 
+import graphics.power.IPower;
+
 import java.awt.Color;
 
 /**
@@ -8,19 +10,22 @@ import java.awt.Color;
  *
  */
 
-public class Marble extends Candy{
-	
+public class MarbleWithPowerPicture extends Marble{
+
 	private int posX;
 	private int posY;
 	private Color color;
+	private IPower iPower;
+	private Picture picture;
 	
-	public Marble() {}
+	public MarbleWithPowerPicture() {}
 	
-	public Marble(int posX, int posY, Color color) {
-		super (posX, posY);
+	public MarbleWithPowerPicture(int posX, int posY, Color color, IPower iPower) {
+		super(posX, posY, color);
 		this.posX = posX;
 		this.posY = posY;
 		this.color = color;
+		this.iPower = iPower;
 	}
 
 	/**
@@ -63,5 +68,19 @@ public class Marble extends Candy{
 	 */
 	public void setColor(Color color) {
 		this.color = color;
+	}
+
+	/**
+	 * @return the power
+	 */
+	public IPower getPower() {
+		return iPower;
+	}
+
+	/**
+	 * @param iPower the power to set
+	 */
+	public void setPower(IPower iPower) {
+		this.iPower = iPower;
 	}
 }

@@ -1,5 +1,11 @@
 package iObserver;
 
+/**
+ * 
+ * @author Philippe & Marcel
+ *
+ */
+
 public interface IObserver {
 
 	public void mousePressed();

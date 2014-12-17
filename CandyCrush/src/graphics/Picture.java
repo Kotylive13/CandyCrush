@@ -2,6 +2,12 @@ package graphics;
 
 import java.awt.image.BufferedImage;
 
+/**
+ * 
+ * @author Philippe & Marcel
+ *
+ */
+
 public class Picture {
 
 	private BufferedImage image;

@@ -6,17 +6,24 @@ import java.awt.event.WindowEvent;
 
 import manager.GameManager;
 
+/**
+ * 
+ * @author Philippe & Marcel
+ *
+ */
+
 public class Window {
 
 	private Title title;
 	private GameManager gameManager;
+	
 	public Window(){}
+	
 	public Window (Title title){
 		this.title = title;
 		try {
 			this.gameManager = GameManager.getInstance();
 		} catch (InstantiationException | IllegalAccessException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

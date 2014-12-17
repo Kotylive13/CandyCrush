@@ -8,6 +8,12 @@ import java.util.TimerTask;
 import manager.EventManagerObservable;
 import algorithms.Algorithms;
 
+/**
+ * 
+ * @author Philippe & Marcel
+ *
+ */
+
 public class GameControlerObserver implements IObserver {
 
 	private Algorithms algorithm;
@@ -37,13 +43,14 @@ public class GameControlerObserver implements IObserver {
 
 	@Override
 	public void mousePressed() {
+		
 		selectedX = eventManager.getMouseEvent().getX() / 32;
 		selectedY = eventManager.getMouseEvent().getY() / 32;
-
 	}
 
 	@Override
 	public void mouseMoved() {
+		
 		if (selectedX != -1 && selectedY != -1) {
 			swappedX = eventManager.getMouseEvent().getX() / 32;
 			swappedY = eventManager.getMouseEvent().getY() / 32;
@@ -51,10 +58,8 @@ public class GameControlerObserver implements IObserver {
 			if (!algorithm
 					.isValidSwap(selectedX, selectedY, swappedX, swappedY)) {
 				swappedX = swappedY = -1;
-
 			}
 		}
-
 	}
 
 	@Override
@@ -71,7 +76,6 @@ public class GameControlerObserver implements IObserver {
 			}
 		}
 		selectedX = selectedY = swappedX = swappedY = -1;
-
 	}
 
 	/**
@@ -132,20 +136,5 @@ public class GameControlerObserver implements IObserver {
 	 */
 	public void setSwappedY(int swappedY) {
 		this.swappedY = swappedY;
-	}
-
-	/**
-	 * @return the eventManager
-	 */
-	public EventManagerObservable getEventManager() {
-		return eventManager;
-	}
-
-	/**
-	 * @param eventManager
-	 *            the eventManager to set
-	 */
-	public void setEventManager(EventManagerObservable eventManager) {
-		this.eventManager = eventManager;
 	}
 }
