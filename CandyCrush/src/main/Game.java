@@ -22,5 +22,4 @@ public class Game {
 		eventManager.addObserver(gameManager.getGameScene());	
 		window.addFrame();
 	}
-	
 }
