@@ -2,8 +2,10 @@ package controler;
 
 import iObserver.IObserver;
 
-import java.util.Timer;
-import java.util.TimerTask;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.Timer;
 
 import manager.EventManagerObservable;
 import algorithms.Algorithms;
@@ -39,12 +41,11 @@ public class GameControlerObserver implements IObserver {
 	public void mousePressed() {
 		selectedX = eventManager.getMouseEvent().getX() / 32;
 		selectedY = eventManager.getMouseEvent().getY() / 32;
-
 	}
 
 	@Override
 	public void mouseMoved() {
-		if (selectedX != -1 && selectedY != -1) {
+		if (selectedX != -1 && selectedY != -1 && selectedX < 8 && selectedY < 8 ) {
 			swappedX = eventManager.getMouseEvent().getX() / 32;
 			swappedY = eventManager.getMouseEvent().getY() / 32;
 			// si l'échange n'est pas valide, on cache la deuxième case
@@ -63,12 +64,19 @@ public class GameControlerObserver implements IObserver {
 		// lorsque l'on relâche la souris il faut faire l'échange et cacher les
 		// cases
 		if (selectedX != -1 && selectedY != -1 && swappedX != -1
-				&& swappedY != -1) {
+				&& swappedY != -1 && selectedX < 8 && selectedY < 8 && swappedX < 8 && swappedY < 8) {
 			algorithm.swap(selectedX, selectedY, swappedX, swappedY);
-			while (algorithm.removeAlignments()) {
-				while (algorithm.fillAfterDestroyMarbles()) {
-				}
-			}
+			ActionListener actionListener = new ActionListener() {
+                public void actionPerformed(ActionEvent actionEvent) {
+                	while (algorithm.removeAlignments()) {
+        				while (algorithm.fillAfterDestroyMarbles()) {
+        				}
+        			}
+                }
+            };
+            Timer timer = new Timer(5, actionListener);
+            timer.start();
+			
 		}
 		selectedX = selectedY = swappedX = swappedY = -1;
 

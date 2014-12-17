@@ -64,17 +64,31 @@ public class AlgorithmsTest {
 
 	@Test
 	public void testIsValidSwap() {
-
-	}
-
-	@Test
-	public void testSwap() {
-
+		Marble[][] matrix = new Marble[8][8];
+		for (int i = 0; i < 8; i++) {
+			for (int j = 0; j < 8; j++) {
+				matrix[i][j] = new Marble(i, j, Color.BLACK);
+			}
+		}
+		algo.getGrid().setMatrix(matrix);
+		assertTrue(algo.isValidSwap(1, 2, 2, 2));
 	}
 
 	@Test
 	public void testRemoveAlignments() {
-
+		Marble[][] matrix = new Marble[8][8];
+		for (int i = 0; i < 8; i++) {
+			for (int j = 0; j < 8; j++) {
+				matrix[i][j] = new Marble(i, j, Color.BLACK);
+			}
+		}
+		algo.getGrid().setMatrix(matrix);
+		algo.removeAlignments();
+		for (int i = 0; i < 8; i++) {
+			for (int j = 0; j < 8; j++) {
+				assertEquals(((Marble)algo.getGrid().getMatrix()[i][j]).getColor(), Color.WHITE);
+			}
+		}
 	}
 
 }

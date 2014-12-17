@@ -73,13 +73,13 @@ public class GameScene extends Panel implements IObserver, IScene, IObservable {
 		}
 
 		// afficher la première case sélectionnée
-		if (selectedX != -1 && selectedY != -1) {
+		if (selectedX != -1 && selectedY != -1 && selectedX < 8 && selectedY < 8 ) {
 			g2.setColor(Color.ORANGE);
 			g2.fillRect(selectedX * 32 + 1, selectedY * 32 + 1, 31, 31);
 		}
 
 		// afficher la deuxième case sélectionnée
-		if (swappedX != -1 && swappedY != -1) {
+		if (swappedX != -1 && swappedY != -1 && swappedX < 8 && swappedY < 8) {
 			g2.setColor(Color.YELLOW);
 			g2.fillRect(swappedX * 32 + 1, swappedY * 32 + 1, 31, 31);
 		}
