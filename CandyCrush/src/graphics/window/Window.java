@@ -32,8 +32,9 @@ public class Window {
 	public void addFrame(){
 		Frame frame = new Frame(title.getTitle());
 		frame.setSize(getPreferredSize());
-		frame.setMaximumSize(getPreferredSize());
 		frame.setMinimumSize(getPreferredSize());
+		frame.setMaximumSize(getPreferredSize());
+		frame.setResizable(false);
 		frame.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent event) {
                 System.exit(0);
@@ -47,7 +48,7 @@ public class Window {
 	
 	// taille de la fen�tre
 		public Dimension getPreferredSize() {
-			return new Dimension(800, 600);
+			return new Dimension(300, 300);
 		}
 		
 }

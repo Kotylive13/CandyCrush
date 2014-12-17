@@ -87,7 +87,9 @@ public class GameControlerObserver implements IObserver {
 				&& swappedY != -1 && selectedX < 8 && selectedY < 8
 				&& swappedX < 8 && swappedY < 8) {
 			algorithms.swap(selectedX, selectedY, swappedX, swappedY);
-			timer.start();
+			while (algorithms.removeAlignments()) {
+				while (algorithms.fillAfterDestroyMarbles()) {}
+			}
 		}
 		selectedX = selectedY = swappedX = swappedY = -1;
 	}
