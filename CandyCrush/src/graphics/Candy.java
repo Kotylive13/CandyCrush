@@ -1,5 +1,10 @@
 package graphics;
 
+/**
+ * 
+ * @author Philippe & Marcel
+ *
+ */
 
 public class Candy {
 
@@ -40,6 +45,4 @@ public class Candy {
 	public void setPosY(int posY) {
 		this.posY = posY;
 	}
-	
-	
 }

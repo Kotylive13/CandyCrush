@@ -7,8 +7,15 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
+import java.util.List;
 
 import event.SoundEvent;
+
+/**
+ * 
+ * @author Philippe & Marcel
+ *
+ */
 
 /**
  * 
@@ -18,16 +25,16 @@ import event.SoundEvent;
 
 public final class EventManagerObservable implements IObservable, MouseListener, MouseMotionListener {
 
-	private SoundEvent soundEvent;
 	private MouseEvent mouseEvent;
-	private ArrayList<IObserver> observers;
-	private final Object MUTEX = new Object();
+	private List<IObserver> observers;
+	private final Object Mutex = new Object();
+	private SoundEvent soundEvent;
 
 	/** pre-initialised unique instance */
 	private static EventManagerObservable INSTANCE = new EventManagerObservable();
 
 	private EventManagerObservable() {
-		this.observers = new ArrayList<>();
+		this.observers = new ArrayList<IObserver>();
 	}
 
 	public final static EventManagerObservable getInstance() {
@@ -39,7 +46,7 @@ public final class EventManagerObservable implements IObservable, MouseListener,
 		if (o == null) {
 			throw new NullPointerException("Null Observer");
 		}
-		synchronized (MUTEX) {
+		synchronized (Mutex) {
 			if (!observers.contains(o))
 				observers.add(o);
 		}
@@ -47,7 +54,7 @@ public final class EventManagerObservable implements IObservable, MouseListener,
 
 	@Override
 	public void removeObserver(IObserver o) {
-		synchronized (MUTEX) {
+		synchronized (Mutex) {
 			observers.remove(o);
 		}
 	}

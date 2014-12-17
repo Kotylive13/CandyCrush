@@ -5,9 +5,10 @@ package graphics;
  * @author Philippe & Koty
  *
  */
+
 public class Grid {
 
-	private Candy [][] matrix;
+	private Candy[][] matrix;
 	private int length;
 	private int height;
 	
@@ -60,6 +61,4 @@ public class Grid {
 	public void setHeight(int height) {
 		this.height = height;
 	}
-	
-	
 }

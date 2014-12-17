@@ -6,6 +6,12 @@ import scene.IScene;
 
 /**
  * 
+ * @author Philippe & Marcel
+ *
+ */
+
+/**
+ * 
  * Cette classe est un Singleton
  *
  */

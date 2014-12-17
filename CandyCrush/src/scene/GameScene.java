@@ -2,6 +2,7 @@ package scene;
 
 import graphics.Grid;
 import graphics.Marble;
+import iObserver.IObservable;
 import iObserver.IObserver;
 
 import java.awt.Color;
@@ -10,34 +11,48 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Panel;
+import java.util.Observer;
 
 import manager.EventManagerObservable;
+import manager.GameManager;
 import algorithms.Algorithms;
 
-public class GameSceneObserver extends Panel implements IObserver, IScene {
+/**
+ * The gameScene observe the EventManager and notify the gameControllerObserver
+ * 
+ * @author Philippe & Marcel
+ *
+ */
+public class GameScene extends Panel implements IObserver, IScene, IObservable {
 
 	private static final long serialVersionUID = 1L;
 
-	private Algorithms algo;
+	private Algorithms algorithms;
 	private Image buffer;
 	private int selectedX;
 	private int selectedY;
 	private int swappedX;
 	private int swappedY;
 	private Grid grid;
+	private IObserver observer;
 
-	EventManagerObservable eventManager = EventManagerObservable.getInstance();
+	private EventManagerObservable eventManager = EventManagerObservable.getInstance();
+	private GameManager gameManager = null;
 
-	public GameSceneObserver() {
+	public GameScene() {
 		selectedX = selectedY = swappedX = swappedY = -1;
 	}
 
-	public GameSceneObserver(Algorithms algo) {
-		this.algo = algo;
+	public GameScene(Algorithms algo) {
+		this.algorithms = algo;
 		this.grid = algo.getGrid();
 		selectedX = selectedY = swappedX = swappedY = -1;
 		addMouseListener(eventManager);
 		addMouseMotionListener(eventManager);
+	}
+	
+	public void setGameManager(GameManager gameManager) {
+		this.gameManager = gameManager;
 	}
 
 	@Override
@@ -58,13 +73,13 @@ public class GameSceneObserver extends Panel implements IObserver, IScene {
 		}
 
 		// afficher la première case sélectionnée
-		if (selectedX != -1 && selectedY != -1) {
+		if (selectedX != -1 && selectedY != -1 && selectedX < 8 && selectedY < 8 ) {
 			g2.setColor(Color.ORANGE);
 			g2.fillRect(selectedX * 32 + 1, selectedY * 32 + 1, 31, 31);
 		}
 
 		// afficher la deuxième case sélectionnée
-		if (swappedX != -1 && swappedY != -1) {
+		if (swappedX != -1 && swappedY != -1 && swappedX < 8 && swappedY < 8) {
 			g2.setColor(Color.YELLOW);
 			g2.fillRect(swappedX * 32 + 1, swappedY * 32 + 1, 31, 31);
 		}
@@ -90,7 +105,7 @@ public class GameSceneObserver extends Panel implements IObserver, IScene {
 	 * @return the algo
 	 */
 	public Algorithms getAlgo() {
-		return algo;
+		return algorithms;
 	}
 
 	/**
@@ -98,51 +113,66 @@ public class GameSceneObserver extends Panel implements IObserver, IScene {
 	 *            the algo to set
 	 */
 	public void setAlgo(Algorithms algo) {
-		this.algo = algo;
-	}
-
-	// taille de la fen�tre
-	public Dimension getPreferredSize() {
-		return new Dimension(32 * 8 + 1, 32 * 8 + 1);
+		this.algorithms = algo;
 	}
 
 	@Override
 	public void mousePressed() {
-
-		// on appuie sur le bouton de la souris : récupérer les coordonnées de
-		// la première case
-		selectedX = eventManager.getMouseEvent().getX() / 32;
-		selectedY = eventManager.getMouseEvent().getY() / 32;
+		notifyObserversMousePressed();
+		selectedX = gameManager.getGameControler().getSelectedX();	
+		selectedY = gameManager.getGameControler().getSelectedY();
+		repaint();
 
 	}
 
 	@Override
 	public void mouseMoved() {
-
-		// on bouge la souris : récupérer les coordonnées de la deuxième case
-		if (selectedX != -1 && selectedY != -1) {
-			swappedX = eventManager.getMouseEvent().getX() / 32;
-			swappedY = eventManager.getMouseEvent().getY() / 32;
-			// si l'échange n'est pas valide, on cache la deuxième case
-			if (!algo.isValidSwap(selectedX, selectedY, swappedX, swappedY)) {
-				swappedX = swappedY = -1;
-			}
-		}
+		notifyObserversMouseMoved();
+		swappedX = gameManager.getGameControler().getSwappedX();
+		swappedY = gameManager.getGameControler().getSwappedY();
+		repaint();
 	}
 
 	@Override
 	public void mouseReleased() {
+		notifyObserversMouseReleased();
+		selectedX = gameManager.getGameControler().getSelectedX();	
+		selectedY = gameManager.getGameControler().getSelectedY();
+		swappedX = gameManager.getGameControler().getSwappedX();
+		swappedY = gameManager.getGameControler().getSwappedY();
+		repaint();
+	}
 
-		// lorsque l'on relâche la souris il faut faire l'échange et cacher les
-		// cases
-		if (selectedX != -1 && selectedY != -1 && swappedX != -1
-				&& swappedY != -1) {
-			algo.swap(selectedX, selectedY, swappedX, swappedY);
-			algo.removeAlignments();
-			System.out.println("coucou");
-			algo.fillAfterDestroyMarbles();
+	@Override
+	public void addObserver(IObserver o) {
+		if (o == null) {
+			throw new NullPointerException("Null Observer");
 		}
-		selectedX = selectedY = swappedX = swappedY = -1;
+		this.observer = o;
+	}
+
+	@Override
+	public void removeObserver(IObserver o) {
+		this.observer = null;
+
+	}
+
+	@Override
+	public void notifyObserversMouseMoved() {
+		observer.mouseMoved();
+
+	}
+
+	@Override
+	public void notifyObserversMousePressed() {
+		observer.mousePressed();
+
+	}
+
+	@Override
+	public void notifyObserversMouseReleased() {
+		observer.mouseReleased();
+
 	}
 
 }

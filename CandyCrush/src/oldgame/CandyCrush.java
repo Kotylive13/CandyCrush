@@ -269,7 +269,7 @@ class CandyCrush extends Panel implements Runnable, MouseListener,
 	}
 
 	// met le jeu dans une fen�tre
-	public static void main(String args[]) {
+	public static void main2(String args[]) {
 		Frame frame = new Frame("Miam, des bonbons !");
 		final CandyCrush obj = new CandyCrush();
 		frame.addWindowListener(new WindowAdapter() {

@@ -1,34 +1,38 @@
 package manager;
 
-import graphics.Grid;
 import graphics.window.Score;
 
 import java.io.Serializable;
 
-import scene.GameSceneObserver;
+import scene.GameScene;
 import algorithms.Algorithms;
-import controler.GameControler;
+import controler.GameControlerObserver;
 
-public class GameManager implements Serializable{
+/**
+ * 
+ * @author Philippe & Marcel
+ *
+ */
+
+public class GameManager implements Serializable {
 
 	private Score score;
-	private GameSceneObserver gameScene;
-	private GameControler gameControler;
+	private GameScene gameScene;
+	private GameControlerObserver gameControlerObserver;
 	private Algorithms algorithms;
 	private static final long serialVersionUID = 1;
-	private static GameManager INSTANCE = new GameManager();
 
-	private GameManager() {
+	private static GameManager INSTANCE = new GameManager(8, 8);
+
+	private GameManager(int height, int length) {
 		score = new Score();
-		try {
-			gameControler = new GameControler();
-			gameScene = new GameSceneObserver(gameControler.getAlgorithm());
-		} catch (InstantiationException | IllegalAccessException e) {
-			e.printStackTrace();
-		}
+		gameControlerObserver = new GameControlerObserver(height, length);
+		gameScene = new GameScene(gameControlerObserver.getAlgorithm());
+		gameScene.addObserver(gameControlerObserver);
+		gameScene.setGameManager(this);
 	}
-	
-	public static GameManager getInstance()
+
+	public final static GameManager getInstance()
 			throws InstantiationException, IllegalAccessException {
 		return INSTANCE;
 	}
@@ -46,7 +50,8 @@ public class GameManager implements Serializable{
 	}
 
 	/**
-	 * @param score the score to set
+	 * @param score
+	 *            the score to set
 	 */
 	public void setScore(Score score) {
 		this.score = score;
@@ -55,29 +60,31 @@ public class GameManager implements Serializable{
 	/**
 	 * @return the gameScene
 	 */
-	public GameSceneObserver getGameScene() {
+	public GameScene getGameScene() {
 		return gameScene;
 	}
 
 	/**
-	 * @param gameScene the gameScene to set
+	 * @param gameScene
+	 *            the gameScene to set
 	 */
-	public void setGameScene(GameSceneObserver gameScene) {
+	public void setGameScene(GameScene gameScene) {
 		this.gameScene = gameScene;
 	}
 
 	/**
 	 * @return the gameControler
 	 */
-	public GameControler getGameControler() {
-		return gameControler;
+	public GameControlerObserver getGameControler() {
+		return gameControlerObserver;
 	}
 
 	/**
-	 * @param gameControler the gameControler to set
+	 * @param gameControlerObserver
+	 *            the gameControler to set
 	 */
-	public void setGameControler(GameControler gameControler) {
-		this.gameControler = gameControler;
+	public void setGameControler(GameControlerObserver gameControlerObserver) {
+		this.gameControlerObserver = gameControlerObserver;
 	}
 
 	/**
@@ -88,11 +95,11 @@ public class GameManager implements Serializable{
 	}
 
 	/**
-	 * @param algorithms the algorithms to set
+	 * @param algorithms
+	 *            the algorithms to set
 	 */
 	public void setAlgorithms(Algorithms algorithms) {
 		this.algorithms = algorithms;
 	}
-	
-	
+
 }
