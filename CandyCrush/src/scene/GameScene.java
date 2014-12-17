@@ -35,6 +35,7 @@ public class GameScene extends Panel implements IObserver, IScene, IObservable {
 	private int swappedY;
 	private Grid grid;
 	private IObserver observer;
+	private Marble[][] gridMarble;
 
 	private EventManagerObservable eventManager = EventManagerObservable.getInstance();
 	private GameManager gameManager = null;
@@ -47,6 +48,7 @@ public class GameScene extends Panel implements IObserver, IScene, IObservable {
 		this.algorithms = algo;
 		this.grid = algo.getGrid();
 		selectedX = selectedY = swappedX = swappedY = -1;
+		gridMarble = (Marble[][]) grid.getMatrix();
 		addMouseListener(eventManager);
 		addMouseMotionListener(eventManager);
 	}
@@ -66,8 +68,6 @@ public class GameScene extends Panel implements IObserver, IScene, IObservable {
 		g2.setColor(Color.WHITE);
 		g2.fillRect(0, 0, getWidth(), getHeight());
 		
-		Marble[][] gridMarble = (Marble[][]) grid.getMatrix();
-
 		// afficher la grille vide
 		g2.setColor(Color.BLACK);
 		for (int i = 0; i < 9; i++) {
@@ -145,6 +145,7 @@ public class GameScene extends Panel implements IObserver, IScene, IObservable {
 		selectedY = gameManager.getGameControler().getSelectedY();
 		swappedX = gameManager.getGameControler().getSwappedX();
 		swappedY = gameManager.getGameControler().getSwappedY();
+		gridMarble = (Marble[][]) grid.getMatrix();
 		repaint();
 	}
 
