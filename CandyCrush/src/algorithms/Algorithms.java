@@ -61,15 +61,11 @@ public class Algorithms {
 	public boolean fillAfterDestroyMarbles() {
 		matrix = grid.getMatrix();
 		boolean modified = false;
-		Candy candy;
-		Marble marble = new Marble(0, 0, Color.WHITE);
 		for (int i = 0; i < grid.getLength(); i++) {
 			for (int j = grid.getHeight() - 1; j >= 0; j--) {
-				marble.setPosX(i);
-				marble.setPosY(j);
 				if (((Marble)matrix[i][j]).getColor().equals(Color.WHITE)) {
 					if (j == 0) {
-						candy = new Marble();
+						Candy candy = new Marble();
 						candy = getRandomCandy();
 						candy.setPosX(i);
 						candy.setPosY(j);
@@ -159,11 +155,11 @@ public class Algorithms {
 		// passe 1 : marquer tous les alignements
 		for (int i = 0; i < grid.getLength(); i++) {
 			for (int j = 0; j < grid.getHeight(); j++) {
-				if (matrix[i][j] != null && horizontalAligned(i, j)) {
+				if (!((Marble)matrix[i][j]).getColor().equals(Color.WHITE) && horizontalAligned(i, j)) {
 					modified = true;
 					marked[i][j] = marked[i + 1][j] = marked[i + 2][j] = true;
 				}
-				if (matrix[i][j] != null && verticalAligned(i, j)) {
+				if (!((Marble)matrix[i][j]).getColor().equals(Color.WHITE) && verticalAligned(i, j)) {
 					modified = true;
 					marked[i][j] = marked[i][j + 1] = marked[i][j + 2] = true;
 				}
@@ -172,14 +168,12 @@ public class Algorithms {
 		if (modified == false)
 			return modified;
 		// passe 2 : supprimer les cases marqu�es
-		Marble marble2;
 		for (int i = 0; i < grid.getLength(); i++) {
 			for (int j = 0; j < grid.getHeight(); j++) {
 				if (marked[i][j]) {
-					marble2 = new Marble(i, j, Color.WHITE);
+					Marble marble2 = new Marble(i, j, Color.WHITE);
 					matrix[i][j] = marble2;
 					marked[i][j] = false;
-					modified = true;
 				}
 			}
 		}
