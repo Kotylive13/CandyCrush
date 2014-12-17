@@ -65,30 +65,32 @@ public class GameScene extends Panel implements IObserver, IScene, IObservable {
 		// fond
 		g2.setColor(Color.WHITE);
 		g2.fillRect(0, 0, getWidth(), getHeight());
+		
+		Marble[][] gridMarble = (Marble[][]) grid.getMatrix();
 
 		// afficher la grille vide
 		g2.setColor(Color.BLACK);
 		for (int i = 0; i < 9; i++) {
-			g2.drawLine(32 * i, 0, 32 * i, 8 * 32 + 1);
-			g2.drawLine(0, 32 * i, 8 * 32 + 1, 32 * i);
+			g2.drawLine(32 * i, 0, 32 * i,  grid.getLength()* 32 + 1);
+			g2.drawLine(0, 32 * i, grid.getHeight() * 32 + 1, 32 * i);
 		}
 
 		// afficher la première case sélectionnée
-		if (selectedX != -1 && selectedY != -1 && selectedX < 8 && selectedY < 8 ) {
+		if (selectedX != -1 && selectedY != -1 && selectedX < grid.getLength() && selectedY < grid.getHeight() ) {
 			g2.setColor(Color.ORANGE);
 			g2.fillRect(selectedX * 32 + 1, selectedY * 32 + 1, 31, 31);
 		}
 
 		// afficher la deuxième case sélectionnée
-		if (swappedX != -1 && swappedY != -1 && swappedX < 8 && swappedY < 8) {
+		if (swappedX != -1 && swappedY != -1 && swappedX < grid.getLength() && swappedY < grid.getHeight()) {
 			g2.setColor(Color.YELLOW);
 			g2.fillRect(swappedX * 32 + 1, swappedY * 32 + 1, 31, 31);
 		}
 
 		// afficher le contenu de la grille
-		Marble[][] gridMarble = (Marble[][]) grid.getMatrix();
-		for (int i = 0; i < 8; i++) {
-			for (int j = 0; j < 8; j++) {
+		
+		for (int i = 0; i < grid.getLength(); i++) {
+			for (int j = 0; j < grid.getHeight(); j++) {
 				g2.setColor(gridMarble[i][j].getColor());
 				g2.fillOval(32 * i + 3, 32 * j + 3, 27, 27);
 			}
