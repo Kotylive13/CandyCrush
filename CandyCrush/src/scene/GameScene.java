@@ -27,7 +27,7 @@ public class GameScene extends Panel implements IObserver, IScene, IObservable {
 
 	private static final long serialVersionUID = 1L;
 
-	private Algorithms algo;
+	private Algorithms algorithms;
 	private Image buffer;
 	private int selectedX;
 	private int selectedY;
@@ -44,7 +44,7 @@ public class GameScene extends Panel implements IObserver, IScene, IObservable {
 	}
 
 	public GameScene(Algorithms algo) {
-		this.algo = algo;
+		this.algorithms = algo;
 		this.grid = algo.getGrid();
 		selectedX = selectedY = swappedX = swappedY = -1;
 		addMouseListener(eventManager);
@@ -105,7 +105,7 @@ public class GameScene extends Panel implements IObserver, IScene, IObservable {
 	 * @return the algo
 	 */
 	public Algorithms getAlgo() {
-		return algo;
+		return algorithms;
 	}
 
 	/**
@@ -113,7 +113,7 @@ public class GameScene extends Panel implements IObserver, IScene, IObservable {
 	 *            the algo to set
 	 */
 	public void setAlgo(Algorithms algo) {
-		this.algo = algo;
+		this.algorithms = algo;
 	}
 
 	@Override

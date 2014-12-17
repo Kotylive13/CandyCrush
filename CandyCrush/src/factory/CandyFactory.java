@@ -28,7 +28,6 @@ public class CandyFactory {
 			try {
 				candy = cls.newInstance();
 			} catch (InstantiationException | IllegalAccessException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			candy.setColor(colors[i]);

@@ -8,6 +8,12 @@ import scene.GameScene;
 import algorithms.Algorithms;
 import controler.GameControlerObserver;
 
+/**
+ * 
+ * @author Philippe & Marcel
+ *
+ */
+
 public class GameManager implements Serializable {
 
 	private Score score;
@@ -15,6 +21,8 @@ public class GameManager implements Serializable {
 	private GameControlerObserver gameControlerObserver;
 	private Algorithms algorithms;
 	private static final long serialVersionUID = 1;
+	
+	/** pre-initialised unique instance */
 	private static GameManager INSTANCE = new GameManager();
 
 	private GameManager() {
@@ -25,7 +33,7 @@ public class GameManager implements Serializable {
 		gameScene.setGameManager(this);
 	}
 
-	public static GameManager getInstance() throws InstantiationException,
+	public final static GameManager getInstance() throws InstantiationException,
 			IllegalAccessException {
 		return INSTANCE;
 	}

@@ -18,7 +18,7 @@ import algorithms.Algorithms;
 
 public class GameControlerObserver implements IObserver {
 
-	private Algorithms algorithm;
+	private Algorithms algorithms;
 	private int selectedX;
 	private int selectedY;
 	private int swappedX;
@@ -27,20 +27,20 @@ public class GameControlerObserver implements IObserver {
 			.getInstance();
 
 	public GameControlerObserver() {
-		algorithm = new Algorithms();
-		algorithm.fill();
+		algorithms = new Algorithms();
+		algorithms.fill();
 		selectedX = selectedY = swappedX = swappedY = -1;
-		while (algorithm.removeAlignments())
-			while (algorithm.fillAfterDestroyMarbles()) {
+		while (algorithms.removeAlignments())
+			while (algorithms.fillAfterDestroyMarbles()) {
 			}
 	}
 
 	public Algorithms getAlgorithm() {
-		return algorithm;
+		return algorithms;
 	}
 
 	public void setAlgorithm(Algorithms algorithm) {
-		this.algorithm = algorithm;
+		this.algorithms = algorithm;
 	}
 
 	@Override
@@ -56,8 +56,7 @@ public class GameControlerObserver implements IObserver {
 			swappedX = eventManager.getMouseEvent().getX() / 32;
 			swappedY = eventManager.getMouseEvent().getY() / 32;
 			// si l'échange n'est pas valide, on cache la deuxième case
-			if (!algorithm
-					.isValidSwap(selectedX, selectedY, swappedX, swappedY)) {
+			if (!algorithms.isValidSwap(selectedX, selectedY, swappedX, swappedY)) {
 				swappedX = swappedY = -1;
 			}
 		}
@@ -70,11 +69,11 @@ public class GameControlerObserver implements IObserver {
 		// cases
 		if (selectedX != -1 && selectedY != -1 && swappedX != -1
 				&& swappedY != -1 && selectedX < 8 && selectedY < 8 && swappedX < 8 && swappedY < 8) {
-			algorithm.swap(selectedX, selectedY, swappedX, swappedY);
+			algorithms.swap(selectedX, selectedY, swappedX, swappedY);
 			ActionListener actionListener = new ActionListener() {
                 public void actionPerformed(ActionEvent actionEvent) {
-                	while (algorithm.removeAlignments()) {
-        				while (algorithm.fillAfterDestroyMarbles()) {
+                	while (algorithms.removeAlignments()) {
+        				while (algorithms.fillAfterDestroyMarbles()) {
         				}
         			}
                 }
